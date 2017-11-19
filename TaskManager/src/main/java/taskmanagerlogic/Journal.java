@@ -2,7 +2,9 @@ package taskmanagerlogic;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -13,28 +15,18 @@ import java.util.List;
 
 public class Journal {
 
-    private List<Task> tasks;
-
-    /**
-     * Object of Journal class 0 singleton object
-     */
-    private static Journal ourInstance = new Journal();
+    private List<Task> tasks = new ArrayList<>();
 
     /**
      * Contains serializable tasks
      */
     private File journal;
 
-    public static Journal getInstance() {
-        return ourInstance;
-    }
-
     /**
-     * Create once new object and create journal file , if it does not exist
-     * Fills a collection a collection of tasks , if file is empty
+     * Create once new object and create journal file if it does not exist
+     * Fills  collection of tasks if file is empty
      */
-    private Journal() {
-        File file = new File("journal.txt");
+    public void load(File file) {
         journal = file;
         if (!file.exists()) {
             try {
@@ -62,6 +54,7 @@ public class Journal {
         }
     }
 
+
     public void save() throws IOException {
         try (FileOutputStream output = new FileOutputStream(journal);
              ObjectOutput outputObject = new ObjectOutputStream(output)) {
@@ -71,34 +64,104 @@ public class Journal {
         }
     }
 
+    public Journal() {
+
+    }
+
     public void add(Task task) {
         tasks.add(task);
+    }
+
+    @Override
+    public String toString() {
+        String journal = "Tasks ------>\n\n";
+        for (Task task : tasks) {
+            journal += task;
+            journal += '\n';
+        }
+        return journal + "<-------";
+    }
+
+
+    /**
+     * delete by ID
+     *
+     * @param id
+     */
+    public void delete(UUID id) {
+        tasks.removeAll(findById(id));
     }
 
     /**
      * delete by index
      *
-     * @param index
+     * @param name
      */
-    public void delete(int index) {
-        tasks.remove(index);
+    public void delete(String name) {
+        tasks.removeAll(findByName(name));
     }
 
     /**
-     * delete by time
+     * delete by status
      *
-     * @param time
+     * @param status
      */
-    public void delete(String time) {
-        for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getDateTime().equals(time)) tasks.remove(i);
-        }
+
+    public void delete(boolean status) {
+        tasks.removeAll(findByStatus(status));
     }
 
-    public void clean() {
+    /**
+     * delete by period of time
+     *
+     * @param from
+     * @param to
+     */
+    public void delete(Date from, Date to) {
+        tasks.removeAll(findByPeriodOfTime(from, to));
+    }
+
+    public List<Task> findByName(String name) {
+        List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            tasks.remove(i);
+            if (tasks.get(i).getName().equals(name))
+                particularTasks.add(tasks.get(i));
         }
+        return particularTasks;
+    }
+
+    public List<Task> findByPeriodOfTime(Date from, Date to) {
+        List<Task> particularTasks = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getDateTime().after(from) && tasks.get(i).getDateTime().before(to))
+                particularTasks.add(tasks.get(i));
+        }
+        return particularTasks;
+    }
+
+    public List<Task> findById(UUID id) {
+        List<Task> particularTasks = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).getId().equals(id))
+                particularTasks.add(tasks.get(i));
+        }
+        return particularTasks;
+    }
+
+    public List<Task> findByStatus(boolean status) {
+        List<Task> particularTasks = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            if (tasks.get(i).isExecuted() == status)
+                particularTasks.add(tasks.get(i));
+        }
+        return particularTasks;
+    }
+
+    //TODO: Search by id , name , date , status and remake delete-methods easier
+
+    public void clean() {
+        for (Task task : tasks)
+            tasks.remove(task);
     }
 
     public List<Task> getTasks() {
