@@ -107,7 +107,7 @@ public class Journal {
      * @param status
      */
 
-    public void delete(boolean status) {
+    public void delete(Action status) {
         tasks.removeAll(findByStatus(status));
     }
 
@@ -148,20 +148,17 @@ public class Journal {
         return particularTasks;
     }
 
-    public List<Task> findByStatus(boolean status) {
+    public List<Task> findByStatus(Action status) {
         List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).isExecuted() == status)
+            if (tasks.get(i).getStatus() == status)
                 particularTasks.add(tasks.get(i));
         }
         return particularTasks;
     }
 
-    //TODO: Search by id , name , date , status and remake delete-methods easier
-
     public void clean() {
-        for (Task task : tasks)
-            tasks.remove(task);
+        tasks.clear();
     }
 
     public List<Task> getTasks() {

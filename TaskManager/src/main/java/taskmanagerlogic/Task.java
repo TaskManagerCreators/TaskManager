@@ -1,8 +1,12 @@
 package taskmanagerlogic;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.DataFormatException;
 
 /**
  * JavaBean Task , describes a  task
@@ -10,9 +14,10 @@ import java.util.UUID;
  * @version 1.0
  */
 
-public class Task implements java.io.Serializable {
+public class Task extends TimerTask implements java.io.Serializable {
 
     private static final long serialVersionUID = 12321312324L;
+
 
     public UUID getId() {
         return id;
@@ -23,7 +28,16 @@ public class Task implements java.io.Serializable {
     private String describe;
     private Date dateTime;
     private List<String> contacts;
-    private boolean executed = false;
+
+    public Action getStatus() {
+        return status;
+    }
+
+    public void setStatus(Action status) {
+        this.status = status;
+    }
+
+    private Action status;
 
     public String getName() {
         return name;
@@ -50,16 +64,17 @@ public class Task implements java.io.Serializable {
      * @param dateTime hh.mm (am|pm) (d|dd).(m|mm).yyyy
      * @param contacts
      * @see UserInterface#datePattern
-     * @see Task#Task()
      */
 
     public Task(String name, String describe, Date dateTime, List<String> contacts) {
+        status = Action.SCHEDULED;
         this.name = name;
         this.describe = describe;
         this.dateTime = dateTime;
         this.contacts = contacts;
         id = UUID.randomUUID();
     }
+
 
     public Task() {
     }
@@ -84,22 +99,30 @@ public class Task implements java.io.Serializable {
 
     @Override
     public String toString() {
-        String taskString = "ID : " + id + "\nStatus : " + (executed == true ? "Executed" : "Waiting for executing") + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + dateTime + "\nContacts : ";
+        String taskString = "ID : " + id + "\nStatus : "
+                + (status == Action.COMPLETED ? "Completed" :
+                (status == Action.RUNNING ? "Running" : "Scheduled"))
+                + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + dateTime;
 
-        for (String contact : contacts) {
-            taskString += contact + " , ";
+        if (!contacts.isEmpty()) {
+            taskString += "\nContacts : ";
+            for (String contact : contacts) {
+                taskString += contact + " , ";
+            }
+
+            taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
         }
-
-        taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
-
         return taskString + '\n';
     }
 
-    public boolean isExecuted() {
-        return executed;
+
+    @Override
+    public void run() {
+        status = Action.RUNNING;
+        UserInterface.doNext();
     }
 
-    public void setExecuted(boolean executed) {
-        this.executed = executed;
-    }
+    public static final Comparator<Task> COMPARE_BY_TIME = Comparator.comparing(task -> task.dateTime);
+
+
 }
