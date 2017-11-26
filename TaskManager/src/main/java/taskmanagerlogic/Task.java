@@ -1,6 +1,12 @@
 package taskmanagerlogic;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.DataFormatException;
 
 /**
  * JavaBean Task , describes a  task
@@ -12,6 +18,7 @@ public class Task extends TimerTask implements java.io.Serializable {
 
     private static final long serialVersionUID = 12321312324L;
 
+
     public UUID getId() {
         return id;
     }
@@ -19,9 +26,19 @@ public class Task extends TimerTask implements java.io.Serializable {
     private UUID id;
     private String name;
     private String describe;
-    private Date dateTime;
+    private Date targetTime;
+    private Date completedTime;
     private List<String> contacts;
-    private boolean executed = false;
+
+    public Action getStatus() {
+        return status;
+    }
+
+    public void setStatus(Action status) {
+        this.status = status;
+    }
+
+    private Action status;
 
     public String getName() {
         return name;
@@ -48,13 +65,13 @@ public class Task extends TimerTask implements java.io.Serializable {
      * @param dateTime hh.mm (am|pm) (d|dd).(m|mm).yyyy
      * @param contacts
      * @see UserInterface#datePattern
-     * @see Task#Task()
      */
 
     public Task(String name, String describe, Date dateTime, List<String> contacts) {
+        status = Action.SCHEDULED;
         this.name = name;
         this.describe = describe;
-        this.dateTime = dateTime;
+        this.targetTime = dateTime;
         this.contacts = contacts;
         id = UUID.randomUUID();
     }
@@ -62,12 +79,12 @@ public class Task extends TimerTask implements java.io.Serializable {
     public Task() {
         name = "";
         describe = "";
-        dateTime = new Date();
+        targetTime = new Date();
         contacts = new ArrayList<>();
         id=null;
+
     }
 
-   //<editor-fold desc="Getters&Setters">
     public List<String> getContacts() {
         return contacts;
     }
@@ -77,40 +94,50 @@ public class Task extends TimerTask implements java.io.Serializable {
     }
 
 
-    public Date getDateTime() {
-        return dateTime;
+    public Date getTargetTime() {
+        return targetTime;
     }
 
-    public void setDateTime(Date dateTime) {
-        this.dateTime = dateTime;
+    public void setTargetTime(Date dateTime) {
+        this.targetTime = dateTime;
     }
 
 
-
-    public boolean isExecuted() {
-        return executed;
-    }
-
-    public void setExecuted(boolean executed) {
-        this.executed = executed;
-    }
-    //</editor-fold>
     @Override
     public String toString() {
-        String taskString = "ID : " + id + "\nStatus : " + (executed == true ? "Executed" : "Waiting for executing") + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + dateTime + "\nContacts : ";
+        String taskString = "ID : " + id + "\nStatus : "
+                + (status == Action.COMPLETED ? "Completed" :
+                (status == Action.RUNNING ? "Running" : "Scheduled"))
+                + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + targetTime;
 
+        if (!contacts.isEmpty()) {
+            taskString += "\nContacts : ";
             for (String contact : contacts) {
                 taskString += contact + " , ";
             }
 
-        taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
-
+            taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
+        }
         return taskString + '\n';
     }
+
+
     @Override
     public void run() {
-        executed=true;
-        UserInterface.doNext();
+        status = Action.RUNNING;
+        Notification notification = new Notification(this);
+        notification.start();
+        UserInterface userInterface = new UserInterface();
+        userInterface.doNext();
     }
-    public static final Comparator<Task> COMPARE_BY_TIME = (task, t1) -> task.dateTime.compareTo(t1.dateTime);
+
+    public static final Comparator<Task> COMPARE_BY_TIME = Comparator.comparing(task -> task.targetTime);
+
+    public Date getCompletedTime() {
+        return completedTime;
+    }
+
+    public void setCompletedTime(Date completedTime) {
+        this.completedTime = completedTime;
+    }
 }

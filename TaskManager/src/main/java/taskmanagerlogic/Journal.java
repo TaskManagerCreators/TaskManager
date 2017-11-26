@@ -16,7 +16,10 @@ import java.util.UUID;
 public class Journal {
 
     private List<Task> tasks = new ArrayList<>();
-
+    /**
+     * History for deleted tasks
+     */
+    private History history = new History();
     /**
      * Contains serializable tasks
      */
@@ -52,6 +55,7 @@ public class Journal {
         } else {
             tasks = new ArrayList<>();
         }
+        history.load();
     }
 
 
@@ -61,6 +65,7 @@ public class Journal {
             for (Task task : tasks) {
                 outputObject.writeObject(task);
             }
+            history.save();
         }
     }
 
@@ -107,7 +112,7 @@ public class Journal {
      * @param status
      */
 
-    public void delete(boolean status) {
+    public void delete(Action status) {
         tasks.removeAll(findByStatus(status));
     }
 
@@ -133,7 +138,7 @@ public class Journal {
     public List<Task> findByPeriodOfTime(Date from, Date to) {
         List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getDateTime().after(from) && tasks.get(i).getDateTime().before(to))
+            if (tasks.get(i).getTargetTime().after(from) && tasks.get(i).getTargetTime().before(to))
                 particularTasks.add(tasks.get(i));
         }
         return particularTasks;
@@ -148,22 +153,29 @@ public class Journal {
         return particularTasks;
     }
 
-    public List<Task> findByStatus(boolean status) {
+    public List<Task> findByStatus(Action status) {
         List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).isExecuted() == status)
+            if (tasks.get(i).getStatus() == status)
                 particularTasks.add(tasks.get(i));
         }
         return particularTasks;
     }
 
-    //TODO: Search by id , name , date , status and remake delete-methods easier
-
     public void clean() {
-            tasks.removeAll(tasks);
+        tasks.clear();
     }
 
     public List<Task> getTasks() {
         return tasks;
+    }
+
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 }
