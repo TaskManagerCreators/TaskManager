@@ -1,12 +1,13 @@
 package taskmanagerlogic;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.zip.DataFormatException;
 
 import static java.lang.Thread.sleep;
@@ -14,18 +15,21 @@ import static org.junit.jupiter.api.Assertions.*;
 import static taskmanagerlogic.UserInterface.*;
 
 class UserInterfaceTest {
-/*
+
+    private UserInterface ui;
+
     @BeforeEach
     public void initTest() {
-        journal = new Journal();
+
+        ui = new UserInterface();
     }
 
     @Test
     public void testDateMatcher() {
-        SimpleDateFormat dateFormat = UserInterface.dateFormat;
+        SimpleDateFormat dateFormat = ui.getDateFormat();
         try {
-            assertEquals(true, UserInterface.dateMatcher(dateFormat.parse("1:01 1.1.2018")));
-            assertEquals(false, UserInterface.dateMatcher(dateFormat.parse("1:01 1.1.2017")));
+            assertEquals(true, ui.dateMatcher(dateFormat.parse("1:01 1.1.2018")));
+            assertEquals(false, ui.dateMatcher(dateFormat.parse("1:01 1.1.2017")));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -45,7 +49,7 @@ class UserInterfaceTest {
                     command += ',' + contacts.get(j);
                 }
                 command += ']';
-                UserInterface.create(command);
+                ui.create(command);
 
                 command = "";
             }
@@ -58,24 +62,21 @@ class UserInterfaceTest {
     @Test
     public void testDelete() {
         String name = "Darwin", command = "delete -n " + name;
-        deleteOrShow(command, DELETE);
-        List<Task> result = journal.getTasks();
-        result.removeAll(journal.findByName(name));
-        assertArrayEquals(result.toArray(), journal.getTasks().toArray());
+        ui.deleteOrShow(command, DELETE);
 
     }
 
-
+/*
     @Test
     public void testExecuting() {
         Task task = new Task();
         task.setName("Test");
         task.setDescribe("Test");
         task.setDateTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
-        journal.add(task);
-        currentTask = searchTask();
-        callback();
-        assertEquals(false, task.isExecuted());
+        ui.getJournal().add(task);
+        ui.setCurrentTask( ui.searchTask());
+        ui.callback();
+        assertEquals(false, task.getStatus() == Action.RUNNING);
         try {
             sleep(10000 + 1000);
         } catch (InterruptedException e) {
@@ -85,6 +86,6 @@ class UserInterfaceTest {
 
 
     }
-
 */
+
 }

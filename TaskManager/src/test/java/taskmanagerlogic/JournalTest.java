@@ -15,32 +15,18 @@ class JournalTest {
     private List<Task> result;
     private Calendar calendar;
     private final static String JOURNAL_FILE_NAME = "journal.txt";
-    private static String name;
-    private static UUID id;
-    private static Date from;
-    private static Date to;
-    private static Date date;
-    private static boolean status;
+    private String name;
+    private UUID id;
+    private Date from;
+    private Date to;
+    private Date date;
+    private Action status;
 
-/*
     @BeforeEach
     public void initTest() {
         journal = new Journal();
-        Task task;
         calendar = Calendar.getInstance();
         date = Date.from(calendar.toInstant());
-        for (int i = 0; i < 5; i++) {
-            task = new Task("task" + i, "purpose" + i, date,
-                    new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
-
-            if (i == new Random().nextInt() * 5) {
-                name = task.getName();
-                id = task.getId();
-                date = task.getDateTime();
-                status = task.isExecuted();
-            }
-            journal.add(task);
-        }
     }
 
     @After
@@ -50,8 +36,7 @@ class JournalTest {
 
     @Test
     public void testDeleteById() {
-        journal = new Journal();
-        Task task = new Task("1" , "2" , new Date() , new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new ArrayList<>());
         id = task.getId();
         journal.add(task);
         assertFalse(journal.findById(id).isEmpty());
@@ -61,19 +46,24 @@ class JournalTest {
 
     @Test
     public void testDeleteByName() {
-        result = journal.getTasks();
-        result.removeAll(journal.findByName(name));
+        Task task = new Task("test", "test", new Date(), new ArrayList<>());
+        name = task.getName();
+        journal.add(task);
+        assertFalse(journal.findByName(name).isEmpty());
         journal.delete(name);
-        assertArrayEquals(result.toArray(), journal.getTasks().toArray());
+        assertTrue(journal.findByName(name).isEmpty());
     }
 
 
     @Test
     public void testDeleteByStatus() {
-        result = journal.getTasks();
-        result.removeAll(journal.findByStatus(status));
+        Task task = new Task("test", "test", new Date(), new ArrayList<>());
+        status = task.getStatus();
+        journal.add(task);
+        assertFalse(journal.findByStatus(status).isEmpty());
         journal.delete(status);
-        assertArrayEquals(result.toArray(), journal.getTasks().toArray());
+        assertTrue(journal.findByStatus(status).isEmpty());
+        //System.out.println(Action.RUNNING.equals(Action.RUNNING));
     }
 
     @Test
@@ -88,6 +78,7 @@ class JournalTest {
 
     @Test
     public void testFindByID() {
+        //result = new ArrayList<>(Arrays.asList(new Task("1", "2", new Date(), null)));
         result = journal.findById(id);
         result.forEach((task) -> {
             if (!task.getId().equals(id)) {
@@ -100,7 +91,7 @@ class JournalTest {
     public void testFindByStatus() {
         result = journal.findByStatus(status);
         result.forEach((task) -> {
-            if (task.isExecuted() != status) {
+            if (task.getStatus() != status) {
                 fail("Bad search.");
             }
         });
@@ -122,7 +113,7 @@ class JournalTest {
         to = Date.from(calendar.toInstant().plusMillis(100000));
         result = journal.findByPeriodOfTime(from, to);
         result.forEach((task) -> {
-            if (task.getDateTime().after(to) && task.getDateTime().before(from)) {
+            if (task.getTargetTime().after(to) && task.getTargetTime().before(from)) {
                 fail("Bad search.");
             }
         });
@@ -138,7 +129,7 @@ class JournalTest {
             journal.load(file);
             journal.add(task);
             journal.save();
-            assertEquals(true, (fileSize < file.length()));
+            assertEquals(true, fileSize < file.length());
         } catch (IOException e) {
             fail(e.getMessage());
         }
@@ -146,27 +137,31 @@ class JournalTest {
 
     @Test
     public void testCleanJournal() {
-        List<Task> tasks = journal.getTasks();
-        tasks.removeAll(tasks);
+        Task task = new Task("task", "purpose", new Date(),
+                new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
+        journal.add(task);
+        assertTrue(!journal.getTasks().isEmpty());
         journal.clean();
-        assertEquals(tasks.isEmpty(), journal.getTasks().isEmpty());
+        assertTrue(journal.getTasks().isEmpty());
     }
 
     @Test
     public void testFileLoad() {
         File file = new File(JOURNAL_FILE_NAME);
+        journal.clean();
         journal.load(file);
-        assertNotEquals(null, journal.getTasks());
+        if (file.length() > 5) {
+            assertTrue(!journal.getTasks().isEmpty());
+        }
     }
 
     @Test
     public void testTasksAdd() {
         Task task = new Task("task", "purpose", new Date(),
                 new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
-        List<Task> preAdd = journal.getTasks();
-        preAdd.add(task);
-        journal.getTasks().add(task);
-        assertArrayEquals(preAdd.toArray(), journal.getTasks().toArray());
+        journal.clean();
+        journal.add(task);
+        assertTrue(!journal.getTasks().isEmpty());
     }
-*/
+
 }

@@ -1,5 +1,6 @@
 package taskmanagerlogic;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -16,37 +17,69 @@ import java.util.zip.DataFormatException;
  */
 public class UserInterface {
 
-    public static Journal journal;
+    public Journal getJournal() {
+        return journal;
+    }
+
+    public void setJournal(Journal journal) {
+        this.journal = journal;
+    }
+
+    private Journal journal;
+
+    public String getDatePattern() {
+        return datePattern;
+    }
 
     /**
      * Pattern of tasks date-field
      */
-    public static String datePattern = "^((([1 - 12]):(((0[0-9])|([1-5][0-9]))) ((am)|(pm)))|((0?[0-9]|1[0-9]|2[0-3]):((0[0-9])|([1-5][0-9])))) ((0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).(20\\d\\d))$";
+    private  String datePattern = "^((([1 - 12]):(((0[0-9])|([1-5][0-9]))) ((am)|(pm)))|((0?[0-9]|1[0-9]|2[0-3]):((0[0-9])|([1-5][0-9])))) ((0?[1-9]|[12][0-9]|3[01]).(0?[1-9]|1[012]).(20\\d\\d))$";
+
+    public SimpleDateFormat getDateFormat() {
+        return dateFormat;
+    }
 
     /**
      *
      */
-    public static SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd.MM.yyyy");
 
     /**
      * Constant for deleting a task
      */
-    protected static final String DELETE = "delete";
+    protected static final int DELETE = 0;
 
     /**
      * Constant for searching a task
      */
-    protected static final String SHOW = "show";
+    protected static final int SHOW = 1;
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
 
     /**
      *
      */
-    protected static Timer timer;
+    private Timer timer;
+
+    public Task getCurrentTask() {
+        return currentTask;
+    }
+
+    public void setCurrentTask(Task currentTask) {
+        this.currentTask = currentTask;
+    }
 
     /**
      * The next task that must be notified
      */
-    protected static Task currentTask;
+    private Task currentTask;
 
 
     public static void help() {
@@ -64,7 +97,7 @@ public class UserInterface {
      * @throws DataFormatException
      * @see #datePattern
      */
-    public static void create(String command) throws DataFormatException, ParseException {
+    public void create(String command) throws DataFormatException, ParseException {
         String name, describe;
         List<String> contacts;
         Date dateTime;
@@ -94,7 +127,7 @@ public class UserInterface {
      * @param command
      * @param operation "delete" or "show"
      */
-    public static void deleteOrShow(String command, String operation) {
+    public void deleteOrShow(String command, int operation) {
         String arg, data, name;
         List<Task> showingTasks = new ArrayList<>();
         List<Task> temp;
@@ -115,9 +148,9 @@ public class UserInterface {
                 }
                 status = Enum.valueOf(Action.class, data.toUpperCase());
                 temp = journal.findByStatus(status);
-                if (operation.equals(SHOW))
+                if (operation == SHOW)
                     showingTasks.addAll(temp);
-                else if (operation.equals(DELETE))
+                else if (operation == DELETE)
                     journal.delete(status);
             }
 
@@ -127,9 +160,9 @@ public class UserInterface {
                     throw new IllegalArgumentException();
                 id = UUID.fromString(data.trim());
                 temp = journal.findById(id);
-                if (operation.equals(SHOW))
+                if (operation == SHOW)
                     showingTasks.addAll(temp);
-                else if (operation.equals(DELETE))
+                else if (operation == DELETE)
                     journal.delete(id);
             }
 
@@ -139,9 +172,9 @@ public class UserInterface {
                     throw new IllegalArgumentException();
                 name = data.trim();
                 temp = journal.findByName(name);
-                if (operation.equals(SHOW))
+                if (operation == SHOW)
                     showingTasks.addAll(temp);
-                else if (operation.equals(DELETE))
+                else if (operation == DELETE)
                     journal.delete(name);
             }
 
@@ -154,16 +187,16 @@ public class UserInterface {
                 if (from.after(to))
                     throw new IllegalArgumentException();
                 temp = journal.findByPeriodOfTime(from, to);
-                if (operation.equals(SHOW))
+                if (operation == SHOW)
                     showingTasks.addAll(temp);
-                else if (operation.equals(DELETE))
+                else if (operation == DELETE)
                     journal.delete(from, to);
             }
 
             showingTasks.forEach((task -> System.out.println(task)));
 
-            if (showingTasks.isEmpty() && operation.equals("show"))
-                System.out.println("Empty.");
+            if (showingTasks.isEmpty() && operation == SHOW)
+            System.out.println("Empty.");
 
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException | ParseException e) {
             System.out.println("Arguments error\ni.e. - show [(-e true|false)?  (-n name)? (-id id)? (-d date)?].\n" +
@@ -172,7 +205,7 @@ public class UserInterface {
     }
 
 
-    public static boolean dateMatcher(Date date) {
+    public boolean dateMatcher(Date date) {
         Pattern pattern = Pattern.compile(datePattern);
         Matcher matcher = pattern.matcher(dateFormat.format(date));
         Date now = Date.from(Instant.now());
@@ -183,7 +216,7 @@ public class UserInterface {
         return matcher.matches();
     }
 
-    protected static Task searchTask() {
+    protected Task searchTask() {
         List<Task> tasks = journal.getTasks();
         if (tasks.size() == 0) {
             return new Task();
@@ -202,23 +235,29 @@ public class UserInterface {
     /**
      * Schedules to switch the current task status after a while
      */
-    protected static void callback() {
+    protected void callback() {
         if (Objects.isNull(timer)) {
             timer = new Timer();
         }
         long time;
         Date date = new Date();
-        time = currentTask.getDateTime().getTime() - date.getTime();
+        time = currentTask.getTargetTime().getTime() - date.getTime();
         if (time < 0) return;
         timer.schedule(currentTask, time);
 
     }
 
-    protected static void doNext() {
+    protected void doNext() {
         currentTask = searchTask();
         if (currentTask.getId() != null) {
             callback();
         }
+    }
+
+
+    public UserInterface(){
+        journal = new Journal();
+        journal.load(new File("journal.txt"));
     }
 
 

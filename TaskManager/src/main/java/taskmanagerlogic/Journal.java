@@ -133,7 +133,7 @@ public class Journal {
     public List<Task> findByPeriodOfTime(Date from, Date to) {
         List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getDateTime().after(from) && tasks.get(i).getDateTime().before(to))
+            if (tasks.get(i).getTargetTime().after(from) && tasks.get(i).getTargetTime().before(to))
                 particularTasks.add(tasks.get(i));
         }
         return particularTasks;

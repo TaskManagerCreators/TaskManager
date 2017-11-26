@@ -8,8 +8,6 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Timer;
 
-import static taskmanagerlogic.UserInterface.*;
-
 /**
  * Present interacts with ending users
  *
@@ -24,24 +22,29 @@ public class InterAction {
      * @param args
      * @throws IOException
      */
-    public static void main(String[] args) throws IOException {
-        journal = new Journal();
-        journal.load(new File("journal.txt"));
-        timer = new Timer();
-        currentTask = searchTask();
-        if (!Objects.isNull(currentTask.getId())) {
-            callback();
+    public static void main(String[] args) throws IOException, InterruptedException {
+        UserInterface ui = new UserInterface();
+        ui.setTimer(new Timer());
+        ui.setCurrentTask(ui.searchTask());
+        if (!Objects.isNull(ui.getCurrentTask().getId())) {
+            ui.callback();
         }
+
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         String in, key;
         String command[];
         System.out.println("Hey , i'm your task manager.Create task right now.");
+        Cleaner cleaner = new Cleaner(ui, 0);
+        Thread thread;
         while (true) {
+            thread = new Thread(cleaner);
+            thread.setDaemon(true);
+            thread.start();
             in = input.readLine().toLowerCase().trim();
-            if (currentTask.getStatus() == Action.RUNNING || Objects.isNull(currentTask)) {
-                if (journal.getTasks().size() > 1) {
-                    currentTask = searchTask();
-                    callback();
+            if (ui.getCurrentTask().getStatus() == Action.RUNNING || Objects.isNull(ui.getCurrentTask())) {
+                if (ui.getJournal().getTasks().size() > 1) {
+                    ui.setCurrentTask(ui.searchTask());
+                    ui.callback();
                 }
             }
             command = in.split(",");
@@ -50,10 +53,10 @@ public class InterAction {
             switch (key) {
                 case "create": {
                     try {
-                        UserInterface.create(Arrays.toString(command));
-                        if (journal.getTasks().size() == 1) {
-                            currentTask = searchTask();
-                            callback();
+                        ui.create(Arrays.toString(command));
+                        if (ui.getJournal().getTasks().size() == 1) {
+                            ui.setCurrentTask(ui.searchTask());
+                            ui.callback();
                         }
                         continue;
                     } catch (Exception e) {
@@ -63,21 +66,21 @@ public class InterAction {
                     }
                 }
                 case "show": {
-                    if (journal.getTasks().size() == 0)
+                    if (ui.getJournal().getTasks().isEmpty())
                         System.out.println("Empty.");
                     else {
                         if (!command[0].trim().equals("show")) {
-                            UserInterface.deleteOrShow(command[0], UserInterface.SHOW);
-                        } else journal.getTasks().forEach(task -> System.out.println(task));
+                            ui.deleteOrShow(command[0], UserInterface.SHOW);
+                        } else ui.getJournal().getTasks().forEach(task -> System.out.println(task));
                     }
                     continue;
                 }
 
                 case "delete": {
-                    if (journal.getTasks().size() == 0)
+                    if (ui.getJournal().getTasks().isEmpty())
                         System.out.println("Empty.");
                     else {
-                        UserInterface.deleteOrShow(command[0], UserInterface.DELETE);
+                        ui.deleteOrShow(command[0], UserInterface.DELETE);
                     }
                     System.out.println("Command 'delete' executed successfully.");
                     continue;
@@ -89,21 +92,22 @@ public class InterAction {
                 }
 
                 case "save": {
-                    journal.save();
+                    ui.getJournal().save();
                     System.out.println("Command 'save' executed successfully.");
                     continue;
                 }
 
                 case "clean": {
-                    journal.clean();
+                    ui.getJournal().clean();
                     System.out.println("Command 'clean' executed successfully.");
                     continue;
                 }
 
                 case "exit": {
-                    journal.save();
+                    ui.getJournal().save();
                     input.close();
-                    timer.cancel();
+                    ui.getTimer().cancel();
+                    thread.interrupt();
                     break;
                 }
 
