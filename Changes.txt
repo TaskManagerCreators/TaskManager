@@ -1,0 +1,4 @@
+
+Полностью реализован Cleaner , удаляющий completed-таски , тест
+Форматирован вывод в Notification 
+volatile поля (Notification , Cleaner)
