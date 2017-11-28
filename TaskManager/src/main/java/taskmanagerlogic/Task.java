@@ -68,7 +68,7 @@ public class Task extends TimerTask implements java.io.Serializable {
      */
 
     public Task(String name, String describe, Date dateTime, List<String> contacts) {
-        status = Action.COMPLETED;
+        status = Action.SCHEDULED;
         this.name = name;
         this.describe = describe;
         this.targetTime = dateTime;
@@ -77,6 +77,12 @@ public class Task extends TimerTask implements java.io.Serializable {
     }
 
     public Task() {
+        name = "";
+        describe = "";
+        targetTime = new Date();
+        contacts = new ArrayList<>();
+        id=null;
+
     }
 
     public List<String> getContacts() {
@@ -119,12 +125,13 @@ public class Task extends TimerTask implements java.io.Serializable {
     @Override
     public void run() {
         status = Action.RUNNING;
+        Notification notification = new Notification(this);
+        notification.start();
         UserInterface userInterface = new UserInterface();
         userInterface.doNext();
     }
 
     public static final Comparator<Task> COMPARE_BY_TIME = Comparator.comparing(task -> task.targetTime);
-
 
     public Date getCompletedTime() {
         return completedTime;

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 
 /**
@@ -15,8 +16,11 @@ import java.util.UUID;
 
 public class Journal {
 
-    private List<Task> tasks = new ArrayList<>();
-
+    private volatile List<Task> tasks = new ArrayList<>();
+    /**
+     * History for deleted tasks
+     */
+    private History history = new History();
     /**
      * Contains serializable tasks
      */
@@ -52,6 +56,7 @@ public class Journal {
         } else {
             tasks = new ArrayList<>();
         }
+        history.load();
     }
 
 
@@ -61,6 +66,7 @@ public class Journal {
             for (Task task : tasks) {
                 outputObject.writeObject(task);
             }
+            history.save();
         }
     }
 
@@ -142,8 +148,8 @@ public class Journal {
     public List<Task> findById(UUID id) {
         List<Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId().equals(id))
-                particularTasks.add(tasks.get(i));
+                if (tasks.get(i).getId() != null && tasks.get(i).getId().equals(id))
+                    particularTasks.add(tasks.get(i));
         }
         return particularTasks;
     }
@@ -163,5 +169,14 @@ public class Journal {
 
     public List<Task> getTasks() {
         return tasks;
+    }
+
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 }

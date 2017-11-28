@@ -138,7 +138,6 @@ public class UserInterface {
         arg = command.substring(command.indexOf('-') + 1);
 
         try {
-
             if (arg.startsWith("e")) {
                 data = arg.substring(arg.indexOf('e') + 1).trim();
                 if (!data.equals("scheduled") &&
@@ -192,7 +191,16 @@ public class UserInterface {
                 else if (operation == DELETE)
                     journal.delete(from, to);
             }
-
+            timer.cancel();
+            timer.purge();
+            timer = new Timer();
+            Task t = searchTask();
+            if(currentTask != t) {
+                currentTask = t;
+                if (!currentTask.getName().equals("")) {
+                    callback();
+                }
+            }
             showingTasks.forEach((task -> System.out.println(task)));
 
             if (showingTasks.isEmpty() && operation == SHOW)

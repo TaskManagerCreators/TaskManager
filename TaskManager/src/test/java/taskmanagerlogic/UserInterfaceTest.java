@@ -66,13 +66,13 @@ class UserInterfaceTest {
 
     }
 
-/*
+
     @Test
     public void testExecuting() {
         Task task = new Task();
         task.setName("Test");
         task.setDescribe("Test");
-        task.setDateTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
+        task.setTargetTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
         ui.getJournal().add(task);
         ui.setCurrentTask( ui.searchTask());
         ui.callback();
@@ -82,10 +82,9 @@ class UserInterfaceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(true, task.isExecuted());
-
+        assertEquals(true, task.getStatus() == Action.COMPLETED);
 
     }
-*/
+
 
 }

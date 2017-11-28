@@ -1,12 +1,9 @@
 package taskmanagerlogic;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Timer;
+import java.util.*;
 
 /**
  * Present interacts with ending users
@@ -34,19 +31,22 @@ public class InterAction {
         String in, key;
         String command[];
         System.out.println("Hey , i'm your task manager.Create task right now.");
-        Cleaner cleaner = new Cleaner(ui, 0);
-        Thread thread;
+        Cleaner cleaner = new Cleaner(ui);
+        cleaner.setDeltaOfTime(10000 * 6);
+        cleaner.setDaemon(true);
+        cleaner.start();
+
         while (true) {
-            thread = new Thread(cleaner);
-            thread.setDaemon(true);
-            thread.start();
+            System.out.println(cleaner.getState());
             in = input.readLine().toLowerCase().trim();
+
             if (ui.getCurrentTask().getStatus() == Action.RUNNING || Objects.isNull(ui.getCurrentTask())) {
                 if (ui.getJournal().getTasks().size() > 1) {
                     ui.setCurrentTask(ui.searchTask());
                     ui.callback();
                 }
             }
+
             command = in.split(",");
             key = command[0];
             key = key.substring(0, key.split(" ").length < 2 ? key.length() : key.indexOf(" "));
@@ -71,7 +71,12 @@ public class InterAction {
                     else {
                         if (!command[0].trim().equals("show")) {
                             ui.deleteOrShow(command[0], UserInterface.SHOW);
-                        } else ui.getJournal().getTasks().forEach(task -> System.out.println(task));
+                        } else {
+                            List<Task> tasks = ui.getJournal().getTasks();
+                            for (Task task : tasks) {
+                                System.out.println(task);
+                            }
+                        }
                     }
                     continue;
                 }
@@ -107,8 +112,10 @@ public class InterAction {
                     ui.getJournal().save();
                     input.close();
                     ui.getTimer().cancel();
-                    thread.interrupt();
                     break;
+                }
+                case "history": {
+                    System.out.println(ui.getJournal().getHistory());
                 }
 
                 default: {
