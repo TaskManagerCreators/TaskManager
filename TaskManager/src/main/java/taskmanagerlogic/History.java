@@ -6,7 +6,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This class is the history of completed tasks.
+ * It works with the history.txt file.
+ * @Version 1.0
+ *
+ */
 public class History {
+    /**
+     * A list that contains cleaned tasks.
+     * It has not more than 20 latest tasks.
+     */
     private List<Task> cleanedTasks = new ArrayList<>();
     public File file = new File(fileName);
     private static final String fileName = "history.txt";
@@ -30,6 +40,11 @@ public class History {
         }
         return result;
     }
+
+    /**
+     * This method adds a completed task into the history list.
+     * @param task
+     */
     public void addCleanedTask(Task task){
         cleanedTasks.add(task);
         if(cleanedTasks.size() == 21)
