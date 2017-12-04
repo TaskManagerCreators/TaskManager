@@ -1,16 +1,60 @@
 package taskmanagerlogic;
 
+import commands.Command;
+import config.TaskManagerConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Present interacts with ending users
  *
  * @version 1.0
  */
+
+@Component("InterAction")
+@ComponentScan({"taskmanagerlogic", "commands"})
 public class InterAction {
+
+    private UserInterface ui;
+
+    private Cleaner cleaner;
+
+    @Qualifier("create")
+    @Autowired
+    private Command create;
+
+    @Qualifier("show")
+    @Autowired
+    private Command show;
+
+    @Qualifier("delete")
+    @Autowired
+    private Command delete;
+
+    private ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
+    private static AnnotationConfigApplicationContext context;
+
+    @Autowired
+    public InterAction(Cleaner cleaner, UserInterface ui) {
+        this.cleaner = cleaner;
+        this.ui = ui;
+    }
+
+    public InterAction() {
+
+    }
 
     /**
      * Realize interacts with user
@@ -20,57 +64,47 @@ public class InterAction {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-        UserInterface ui = new UserInterface();
-        ui.setTimer(new Timer());
-        ui.setCurrentTask(ui.searchTask());
-        if (!Objects.isNull(ui.getCurrentTask().getId())) {
-            ui.callback();
-        }
+        context = new AnnotationConfigApplicationContext();
+        context.register(TaskManagerConfig.class);
+        context.refresh();
+        SpringApplication.run(Cleaner.class);
+        InterAction interAction = (InterAction) context.getBean("InterAction");
+        interAction.communicate();
+    }
 
+
+    public void communicate() throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         String in, key;
         String command[];
+        ui.schedule();
+        executor.setMaxPoolSize(10);
+        executor.initialize();
         System.out.println("Hey , i'm your task manager.Create task right now.");
-        Cleaner cleaner = new Cleaner(ui);
-        cleaner.setDeltaOfTime(10000 * 6);
-        cleaner.setDaemon(true);
-        cleaner.start();
-
         while (true) {
-            System.out.println(cleaner.getState());
             in = input.readLine().toLowerCase().trim();
-
-            if (ui.getCurrentTask().getStatus() == Action.RUNNING || Objects.isNull(ui.getCurrentTask())) {
-                if (ui.getJournal().getTasks().size() > 1) {
-                    ui.setCurrentTask(ui.searchTask());
-                    ui.callback();
-                }
-            }
-
             command = in.split(",");
             key = command[0];
             key = key.substring(0, key.split(" ").length < 2 ? key.length() : key.indexOf(" "));
             switch (key) {
                 case "create": {
+                    create.setCommand(Arrays.toString(command));
+                    executor.execute(create, 1000);
                     try {
-                        ui.create(Arrays.toString(command));
-                        if (ui.getJournal().getTasks().size() == 1) {
-                            ui.setCurrentTask(ui.searchTask());
-                            ui.callback();
-                        }
-                        continue;
-                    } catch (Exception e) {
-                        System.out.println("Arguments error\ni.e. - create [name , describe , time , contacts].\n" +
-                                "time in format hh:mm am|pm dd.mm.YYYY\nhelp - show all commands");
-                        continue;
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
+                    ui.schedule(ui.getJournal().getLast());
+                    continue;
                 }
                 case "show": {
                     if (ui.getJournal().getTasks().isEmpty())
                         System.out.println("Empty.");
                     else {
                         if (!command[0].trim().equals("show")) {
-                            ui.deleteOrShow(command[0], UserInterface.SHOW);
+                            show.setCommand(command[0]);
+                            executor.execute(show, 1000);
                         } else {
                             List<Task> tasks = ui.getJournal().getTasks();
                             for (Task task : tasks) {
@@ -85,9 +119,10 @@ public class InterAction {
                     if (ui.getJournal().getTasks().isEmpty())
                         System.out.println("Empty.");
                     else {
-                        ui.deleteOrShow(command[0], UserInterface.DELETE);
+                        delete.setCommand(command[0]);
+                        executor.execute(delete, 1000);
+                        System.out.println("Command 'delete' executed successfully.");
                     }
-                    System.out.println("Command 'delete' executed successfully.");
                     continue;
                 }
 
@@ -111,11 +146,12 @@ public class InterAction {
                 case "exit": {
                     ui.getJournal().save();
                     input.close();
-                    ui.getTimer().cancel();
+                    //SpringApplication.exit(context);
                     break;
                 }
                 case "history": {
                     System.out.println(ui.getJournal().getHistory());
+                    continue;
                 }
 
                 default: {
@@ -125,7 +161,9 @@ public class InterAction {
             }
             break;
         }
-
     }
 
 }
+
+
+

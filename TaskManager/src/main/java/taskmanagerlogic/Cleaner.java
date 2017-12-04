@@ -1,48 +1,46 @@
 package taskmanagerlogic;
 
-import java.time.Instant;
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-public class Cleaner extends Thread {
+import java.util.Iterator;
 
-    private long deltaOfTime;
+@EnableScheduling
+@Component
+@ComponentScan("taskmanagerlogic")
+public class Cleaner {
 
-    private volatile UserInterface ui;
-
-    public Task getCurrentTask() {
-        return currentTask;
+    public UserInterface getUi() {
+        return ui;
     }
 
-    public void setCurrentTask(Task currentTask) {
-        this.currentTask = currentTask;
-    }
-
-    private Task currentTask;
-
-
-    public Cleaner(UserInterface ui) {
+    public void setUi(UserInterface ui) {
         this.ui = ui;
-        this.deltaOfTime = 0;
     }
 
-    public long getDeltaOfTime() {
-        return deltaOfTime;
+    private UserInterface ui;
+
+
+    @Autowired
+    public Cleaner(UserInterface userInterface) {
+        this.ui = userInterface;
+
     }
 
-    public void setDeltaOfTime(long deltaOfTime) {
-        this.deltaOfTime = deltaOfTime;
-    }
-
-    @Override
-    public void run() {
-        while (true) {
-            currentTask = ui.getCurrentTask();
-            if (currentTask != null && currentTask.getStatus() == Action.COMPLETED &&
-                    Date.from(Instant.now()).getTime() - currentTask.getCompletedTime().getTime() >= deltaOfTime) {
-                ui.getJournal().delete(currentTask.getId());
-                ui.getJournal().getHistory().addCleanedTask(currentTask);
+    @Scheduled(fixedDelay = 5000)
+    private void clean() {
+        if (!ui.getJournal().getTasks().isEmpty()) {
+            for (Iterator<Task> iterator = ui.getJournal().getTasks().iterator(); iterator.hasNext(); ) {
+                Task task = iterator.next();
+                if (task != null && task.getStatus() == Action.COMPLETED) {
+                    iterator.remove();
+                    ui.getJournal().getHistory().addCleanedTask(task);
+                    System.out.println("deleted");
+                }
             }
-
         }
     }
 }
