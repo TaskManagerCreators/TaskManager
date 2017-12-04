@@ -11,7 +11,7 @@ public class Notification extends Thread {
     }
 
     @Override
-    public void run() {
+    synchronized public void run() {
         System.out.println("You`ve got a task!!!!");
         task.setCompletedTime(new Date());
         System.out.println("Name : " + task.getName() + "\nDescribe : " + task.getDescribe() + "\nComplete at " + task.getCompletedTime());
