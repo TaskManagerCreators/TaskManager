@@ -88,6 +88,7 @@ public class InterAction {
             key = key.substring(0, key.split(" ").length < 2 ? key.length() : key.indexOf(" "));
             switch (key) {
                 case "create": {
+
                     create.setCommand(Arrays.toString(command));
                     executor.execute(create, 1000);
                     try {
@@ -127,7 +128,7 @@ public class InterAction {
                 }
 
                 case "help": {
-                    UserInterface.help();
+                    System.out.println("Help will be written soon.");
                     continue;
                 }
 

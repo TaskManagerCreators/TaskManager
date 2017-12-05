@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import reaction.Output;
 
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ class TaskTest {
 
     @Test
     public void testOutput() {
-        task = new Task("task", "purpose", new Date(),
+        task = new Task("task", "purpose", new Date(),new Output("test"),
                 new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
 
         String out = task.toString();

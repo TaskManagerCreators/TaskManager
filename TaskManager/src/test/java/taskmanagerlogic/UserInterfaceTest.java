@@ -13,33 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserInterfaceTest {
 
-    private taskmanagerlogic.UserInterface ui;
+    private Journal journal;
 
     @BeforeEach
     public void initTest() {
 
-        ui = new UserInterface();
+        journal = new Journal();
     }
 
-    @Test
-    public void testExecuting() {
-        taskmanagerlogic.Task task = new taskmanagerlogic.Task();
-        task.setName("Test");
-        task.setDescribe("Test");
-        task.setTargetTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
-        ui.getJournal().add(task);
-        assertEquals(false, task.getStatus() == taskmanagerlogic.Action.RUNNING);
-        try {
-            sleep(10000 + 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertEquals(true, task.getStatus() == taskmanagerlogic.Action.COMPLETED);
-
-    }
     @Test
     public void testSchedule(){
-        Journal journal = new Journal();
         Task task1 = new Task();
         task1.setName("Task1");
         task1.setDescribe("Desc1");
@@ -65,7 +48,8 @@ class UserInterfaceTest {
             assertEquals(Action.RUNNING , task2.getStatus());
             assertEquals(Action.COMPLETED , task1.getStatus());
             sleep(6000);
-            assertEquals(Action.COMPLETED , task2.getStatus());
+            assertEquals(Action.COMPLETED , task2.getStatus()
+            );
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

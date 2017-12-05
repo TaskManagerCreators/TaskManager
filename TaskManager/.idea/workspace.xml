@@ -18,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CleanerTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CleanerTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/CleanerTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+            <state relative-caret-position="148">
+              <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -30,31 +30,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserInterface.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/UserInterface.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="38" column="4" lean-forward="false" selection-start-line="38" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserInterfaceTest.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/UserInterfaceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="67" column="61" lean-forward="false" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Reaction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/reaction/Reaction.java">
+      <file leaf-file-name="Cleaner.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Cleaner.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+              <caret line="29" column="41" lean-forward="true" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HistoryTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/HistoryTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -63,38 +53,60 @@
       <file leaf-file-name="Journal.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Journal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="455">
-              <caret line="246" column="32" lean-forward="false" selection-start-line="246" selection-start-column="32" selection-end-line="246" selection-end-column="32" />
+            <state relative-caret-position="199">
+              <caret line="236" column="16" lean-forward="false" selection-start-line="236" selection-start-column="16" selection-end-line="236" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ThreadPoolTaskScheduler.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.0.1.RELEASE/spring-context-5.0.1.RELEASE.jar!/org/springframework/scheduling/concurrent/ThreadPoolTaskScheduler.class">
+      <file leaf-file-name="JournalTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/JournalTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="187" column="30" lean-forward="false" selection-start-line="187" selection-start-column="30" selection-end-line="187" selection-end-column="30" />
+            <state relative-caret-position="2934">
+              <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Notification.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Notification.java">
+      <file leaf-file-name="TaskManagerConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/config/TaskManagerConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+            <state relative-caret-position="180">
+              <caret line="30" column="25" lean-forward="true" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Sleep.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/reaction/Sleep.java">
+      <file leaf-file-name="NotificationTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/NotificationTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="180">
+              <caret line="10" column="6" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TaskTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/TaskTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="34" column="73" lean-forward="false" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="InterAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/InterAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -103,21 +115,8 @@
       <file leaf-file-name="Task.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="139" column="26" lean-forward="true" selection-start-line="139" selection-start-column="26" selection-end-line="139" selection-end-column="26" />
-              <folding>
-                <element signature="e#677#678#0" expanded="true" />
-                <element signature="e#708#709#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Thread.class" pinned="false" current-in-tab="false">
-        <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Thread.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2664">
-              <caret line="187" column="29" lean-forward="false" selection-start-line="187" selection-start-column="29" selection-end-line="187" selection-end-column="29" />
+            <state relative-caret-position="142">
+              <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -187,26 +186,26 @@
         <option value="$PROJECT_DIR$/src/main/java/commands/Delete.java" />
         <option value="$PROJECT_DIR$/src/main/java/commands/Show.java" />
         <option value="$PROJECT_DIR$/src/main/java/reaction/ReactionType.java" />
-        <option value="$PROJECT_DIR$/src/main/java/commands/Create.java" />
         <option value="$PROJECT_DIR$/src/main/java/reaction/Reaction.java" />
         <option value="$PROJECT_DIR$/src/main/java/reaction/MailSender.java" />
         <option value="$PROJECT_DIR$/src/main/java/reaction/Output.java" />
         <option value="$PROJECT_DIR$/src/main/java/reaction/Sleep.java" />
         <option value="$PROJECT_DIR$/journal.txt" />
-        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/JournalTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/NotificationTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/TaskTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/UserInterface.java" />
         <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/Journal.java" />
         <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/Cleaner.java" />
         <option value="$PROJECT_DIR$/src/main/java/config/TaskManagerConfig.java" />
-        <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/InterAction.java" />
-        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/CleanerTest.java" />
         <option value="/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Thread.class" />
-        <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/Task.java" />
         <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/Notification.java" />
         <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/UserInterfaceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/Task.java" />
+        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/JournalTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/commands/Create.java" />
+        <option value="$PROJECT_DIR$/src/main/java/taskmanagerlogic/InterAction.java" />
+        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/TaskTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/taskmanagerlogic/CleanerTest.java" />
       </list>
     </option>
   </component>
@@ -246,7 +245,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="34" />
+    <option name="y" value="52" />
     <option name="width" value="1215" />
     <option name="height" value="800" />
   </component>
@@ -265,6 +264,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -289,6 +292,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TaskManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TaskManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="TaskManager" type="b2602c69:ProjectViewProjectNode" />
@@ -339,10 +350,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -399,7 +406,32 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.UserInterfaceTest.testSchedule">
+  <component name="RunManager" selected="JUnit.CleanerTest">
+    <configuration name="CleanerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="taskmanagerlogic.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="TaskManager" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="taskmanagerlogic" />
+      <option name="MAIN_CLASS_NAME" value="taskmanagerlogic.CleanerTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
     <configuration name="CleanerTest.testClean" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -450,32 +482,7 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="JournalTest.testFindByID" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="taskmanagerlogic.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="TaskManager" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="taskmanagerlogic" />
-      <option name="MAIN_CLASS_NAME" value="taskmanagerlogic.JournalTest" />
-      <option name="METHOD_NAME" value="testFindByID" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="NotificationTest.run" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NotificationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="taskmanagerlogic.*" />
@@ -487,8 +494,8 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="taskmanagerlogic" />
       <option name="MAIN_CLASS_NAME" value="taskmanagerlogic.NotificationTest" />
-      <option name="METHOD_NAME" value="run" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -500,7 +507,7 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="UserInterfaceTest.testSchedule" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TaskTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="taskmanagerlogic.*" />
@@ -511,9 +518,9 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="taskmanagerlogic" />
-      <option name="MAIN_CLASS_NAME" value="taskmanagerlogic.UserInterfaceTest" />
-      <option name="METHOD_NAME" value="testSchedule" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="taskmanagerlogic.TaskTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -607,19 +614,19 @@
       <listeners />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.CleanerTest.testClean" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.JournalTest.testFindByID" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.CleanerTest" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.CleanerTest.testClean" />
       <item index="2" class="java.lang.String" itemvalue="JUnit.JournalTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.NotificationTest.run" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.UserInterfaceTest.testSchedule" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.NotificationTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.TaskTest" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.UserInterfaceTest.testSchedule" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.NotificationTest.run" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.JournalTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.JournalTest.testFindByID" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.CleanerTest.testClean" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.CleanerTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.CleanerTest.testClean" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TaskTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.NotificationTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.JournalTest" />
       </list>
     </recent_temporary>
   </component>
@@ -679,46 +686,48 @@
       <workItem from="1512495986711" duration="1600000" />
       <workItem from="1512497708783" duration="438000" />
       <workItem from="1512500251803" duration="435000" />
+      <workItem from="1512500949434" duration="1778000" />
+      <workItem from="1512502824007" duration="914000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="JournalTest_testFindByID - 2017.12.04 at 16h 02m 27s.xml">
-      <configuration name="JournalTest.testFindByID" configurationId="JUnit" />
+    <history-entry file="CleanerTest - 2017.12.05 at 23h 53m 13s.xml">
+      <configuration name="CleanerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="NotificationTest_run - 2017.12.04 at 16h 04m 27s.xml">
-      <configuration name="NotificationTest.run" configurationId="JUnit" />
+    <history-entry file="CleanerTest - 2017.12.05 at 23h 55m 16s.xml">
+      <configuration name="CleanerTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 11m 41s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="CleanerTest_testClean - 2017.12.05 at 23h 46m 52s.xml">
+      <configuration name="CleanerTest.testClean" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 13m 08s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="CleanerTest_testClean - 2017.12.05 at 23h 48m 01s.xml">
+      <configuration name="CleanerTest.testClean" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 15m 53s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="CleanerTest_testClean - 2017.12.05 at 23h 52m 28s.xml">
+      <configuration name="CleanerTest.testClean" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 16m 27s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="CleanerTest_testClean - 2017.12.05 at 23h 53m 21s.xml">
+      <configuration name="CleanerTest.testClean" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 19m 54s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="JournalTest - 2017.12.05 at 23h 50m 04s.xml">
+      <configuration name="JournalTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 22h 21m 23s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="NotificationTest - 2017.12.05 at 23h 50m 10s.xml">
+      <configuration name="NotificationTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 23h 00m 56s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="TaskTest - 2017.12.05 at 23h 50m 14s.xml">
+      <configuration name="TaskTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserInterfaceTest_testSchedule - 2017.12.05 at 23h 04m 18s.xml">
-      <configuration name="UserInterfaceTest.testSchedule" configurationId="JUnit" />
+    <history-entry file="TaskTest - 2017.12.05 at 23h 50m 59s.xml">
+      <configuration name="TaskTest" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="192781000" />
+    <option name="totallyTimeSpent" value="195473000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="34" width="1215" height="800" extended-state="0" />
+    <frame x="65" y="52" width="1215" height="800" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -728,8 +737,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38651994" sideWeight="0.503231" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921812" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42651296" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3631124" sideWeight="0.49676898" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -740,8 +749,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39752406" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39625362" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -759,12 +768,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="90" />
+      <option name="time" value="91" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/util/List.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/util/function/Function.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/lang/String.java" />
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home/src.zip!/java/lang/Runnable.java" />
@@ -805,7 +813,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Action.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/commands/Show.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/commands/ShowTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/commands/Command.java" />
     <entry file="file://$PROJECT_DIR$/history.txt" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.1.0-M1/junit-platform-commons-1.1.0-M1.jar!/org/junit/platform/commons/annotation/Testable.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -830,40 +837,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/History.java" />
     <entry file="file://$PROJECT_DIR$/src/test/java/commands/CreateTest.java" />
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/HistoryTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/JournalTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2700">
-          <caret line="162" column="58" lean-forward="false" selection-start-line="162" selection-start-column="58" selection-end-line="162" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/NotificationTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="7" lean-forward="false" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/TaskTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="37" column="35" lean-forward="false" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/commands/Delete.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/commands/Create.java" />
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -872,43 +846,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Cleaner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="29" column="41" lean-forward="true" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/config/TaskManagerConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="20" column="36" lean-forward="false" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-          <folding>
-            <element signature="e#635#636#0" expanded="true" />
-            <element signature="e#680#681#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/InterAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="152" column="46" lean-forward="false" selection-start-line="152" selection-start-column="46" selection-end-line="152" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/reaction/ReactionType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="12" lean-forward="false" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/reaction/Output.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -921,21 +862,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/CleanerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/Thread.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2664">
           <caret line="187" column="29" lean-forward="false" selection-start-line="187" selection-start-column="29" selection-end-line="187" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -949,17 +879,8 @@
     </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.0.1.RELEASE/spring-context-5.0.1.RELEASE.jar!/org/springframework/scheduling/concurrent/ThreadPoolTaskScheduler.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
+        <state relative-caret-position="2826">
           <caret line="187" column="30" lean-forward="false" selection-start-line="187" selection-start-column="30" selection-end-line="187" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Journal.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="246" column="32" lean-forward="false" selection-start-line="246" selection-start-column="32" selection-end-line="246" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -971,6 +892,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/UserInterfaceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/commands/Command.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="9" lean-forward="false" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/reaction/Output.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="11" lean-forward="false" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding>
+            <element signature="e#191#192#0" expanded="true" />
+            <element signature="e#231#232#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/reaction/Reaction.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -979,30 +927,111 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context/5.0.1.RELEASE/spring-context-5.0.1.RELEASE.jar!/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2358">
+          <caret line="156" column="16" lean-forward="false" selection-start-line="156" selection-start-column="16" selection-end-line="156" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/commands/Create.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="47" column="8" lean-forward="false" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Notification.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
-          <caret line="17" column="28" lean-forward="true" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+          <caret line="17" column="29" lean-forward="false" selection-start-line="17" selection-start-column="29" selection-end-line="17" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/InterAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="301">
+          <caret line="133" column="0" lean-forward="true" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/HistoryTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/JournalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2934">
+          <caret line="175" column="0" lean-forward="false" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/NotificationTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="6" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Task.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="139" column="26" lean-forward="true" selection-start-line="139" selection-start-column="26" selection-end-line="139" selection-end-column="26" />
-          <folding>
-            <element signature="e#677#678#0" expanded="true" />
-            <element signature="e#708#709#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="142">
+          <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/UserInterfaceTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/TaskTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="67" column="61" lean-forward="false" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
+        <state relative-caret-position="360">
+          <caret line="34" column="73" lean-forward="false" selection-start-line="34" selection-start-column="73" selection-end-line="34" selection-end-column="73" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Journal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="236" column="16" lean-forward="false" selection-start-line="236" selection-start-column="16" selection-end-line="236" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/config/TaskManagerConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="30" column="25" lean-forward="true" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/taskmanagerlogic/Cleaner.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="29" column="41" lean-forward="true" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/taskmanagerlogic/CleanerTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="31" column="39" lean-forward="false" selection-start-line="31" selection-start-column="39" selection-end-line="31" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

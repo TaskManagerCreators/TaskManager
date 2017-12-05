@@ -173,7 +173,7 @@ class JournalTest {
         //System.out.println(ui);
         //System.out.println(ui.getJournal());
         //System.out.println(ui.getJournal().getTasks());
-        UserInterface ui = new UserInterface();
+
 
     }
 

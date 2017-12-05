@@ -1,6 +1,7 @@
 package taskmanagerlogic;
 
 import org.springframework.stereotype.Component;
+import reaction.Output;
 import reaction.Reaction;
 import reaction.Sleep;
 
@@ -112,7 +113,6 @@ public class Task implements Serializable, Runnable {
     }
 
     public Task() {
-
     }
 
     @Override

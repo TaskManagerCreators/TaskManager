@@ -45,7 +45,7 @@ public class Create implements Command {
         Reaction reaction;
 
         String[] params = command.split(",");
-
+        if(params.length <= 3) throw new ArrayIndexOutOfBoundsException("Wrong command");
         name = params[0].substring(params[0].indexOf(" ")).trim();
         describe = params[1].trim();
         dateTime = dateFormat.parse(params[2].trim());
@@ -95,7 +95,7 @@ public class Create implements Command {
     public void run() {
         try {
             execute(command);
-        } catch (ParseException | DataFormatException e) {
+        } catch (ParseException | DataFormatException | ArrayIndexOutOfBoundsException e) {
             System.out.println("Arguments error.");
         }
     }
