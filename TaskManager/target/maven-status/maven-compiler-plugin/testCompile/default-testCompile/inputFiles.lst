@@ -1,1 +1,9 @@
-/Users/michailisaev/IdeaProjects/TaskManager/src/test/java/TaskManagerTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/JournalTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/TaskTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/UserInterfaceTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/commands/DeleteTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/CleanerTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/commands/CreateTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/commands/ShowTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/NotificationTest.java
+/home/sergey/Рабочий стол/TaskManager/src/test/java/taskmanagerlogic/HistoryTest.java

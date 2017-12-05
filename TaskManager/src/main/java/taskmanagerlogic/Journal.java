@@ -1,11 +1,16 @@
 package taskmanagerlogic;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.stereotype.Component;
+import taskmanagerlogic.Action;
+import taskmanagerlogic.Task;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Class Journal describes journal which contains tasks and works with journal.txt file
@@ -13,9 +18,9 @@ import java.util.UUID;
  * @version 1.0
  */
 
+@Component("journal")
 public class Journal {
 
-    private List<Task> tasks = new ArrayList<>();
     /**
      * History for deleted tasks
      */
@@ -24,6 +29,36 @@ public class Journal {
      * Contains serializable tasks
      */
     private File journal;
+
+    private ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+
+    @Autowired
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    private volatile List<Task> tasks = new ArrayList<>();
+
+    public History getHistory() {
+        return history;
+    }
+
+    @Autowired
+    public void setHistory(History history) {
+        this.history = history;
+    }
+
+    public Task getLast() {
+        return tasks.get(tasks.size() - 1);
+    }
+
+    public ThreadPoolTaskScheduler getScheduler() {
+        return scheduler;
+    }
+
+    public void setScheduler(ThreadPoolTaskScheduler scheduler) {
+        this.scheduler = scheduler;
+    }
 
     /**
      * Create once new object and create journal file if it does not exist
@@ -55,7 +90,6 @@ public class Journal {
         } else {
             tasks = new ArrayList<>();
         }
-        history.load();
     }
 
 
@@ -65,12 +99,12 @@ public class Journal {
             for (Task task : tasks) {
                 outputObject.writeObject(task);
             }
-            history.save();
         }
     }
 
     public Journal() {
-
+        scheduler.setPoolSize(100);
+        scheduler.initialize();
     }
 
     public void add(Task task) {
@@ -87,7 +121,6 @@ public class Journal {
         return journal + "<-------";
     }
 
-
     /**
      * delete by ID
      *
@@ -95,6 +128,13 @@ public class Journal {
      */
     public void delete(UUID id) {
         tasks.removeAll(findById(id));
+        scheduler.shutdown();
+        scheduler.initialize();
+        Date date = new Date();
+        for (Task t : tasks) {
+            if (date.getTime() - t.getTargetTime().getTime() < 0)
+                scheduler.schedule(t, t.getTargetTime());
+        }
     }
 
     /**
@@ -104,6 +144,13 @@ public class Journal {
      */
     public void delete(String name) {
         tasks.removeAll(findByName(name));
+        scheduler.shutdown();
+        scheduler.initialize();
+        Date date = new Date();
+        for (Task t : tasks) {
+            if (date.getTime() - t.getTargetTime().getTime() < 0)
+                scheduler.schedule(t, t.getTargetTime());
+        }
     }
 
     /**
@@ -114,6 +161,13 @@ public class Journal {
 
     public void delete(Action status) {
         tasks.removeAll(findByStatus(status));
+        scheduler.shutdown();
+        scheduler.initialize();
+        Date date = new Date();
+        for (Task t : tasks) {
+            if (date.getTime() - t.getTargetTime().getTime() < 0)
+                scheduler.schedule(t, t.getTargetTime());
+        }
     }
 
     /**
@@ -124,6 +178,13 @@ public class Journal {
      */
     public void delete(Date from, Date to) {
         tasks.removeAll(findByPeriodOfTime(from, to));
+        scheduler.shutdown();
+        scheduler.initialize();
+        Date date = new Date();
+        for (Task t : tasks) {
+            if (date.getTime() - t.getTargetTime().getTime() < 0)
+                scheduler.schedule(t, t.getTargetTime());
+        }
     }
 
     public List<Task> findByName(String name) {
@@ -135,8 +196,8 @@ public class Journal {
         return particularTasks;
     }
 
-    public List<Task> findByPeriodOfTime(Date from, Date to) {
-        List<Task> particularTasks = new ArrayList<>();
+    public List<taskmanagerlogic.Task> findByPeriodOfTime(Date from, Date to) {
+        List<taskmanagerlogic.Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getTargetTime().after(from) && tasks.get(i).getTargetTime().before(to))
                 particularTasks.add(tasks.get(i));
@@ -144,17 +205,17 @@ public class Journal {
         return particularTasks;
     }
 
-    public List<Task> findById(UUID id) {
-        List<Task> particularTasks = new ArrayList<>();
+    public List<taskmanagerlogic.Task> findById(UUID id) {
+        List<taskmanagerlogic.Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).getId().equals(id))
+            if (tasks.get(i).getId() != null && tasks.get(i).getId().equals(id))
                 particularTasks.add(tasks.get(i));
         }
         return particularTasks;
     }
 
-    public List<Task> findByStatus(Action status) {
-        List<Task> particularTasks = new ArrayList<>();
+    public List<taskmanagerlogic.Task> findByStatus(taskmanagerlogic.Action status) {
+        List<taskmanagerlogic.Task> particularTasks = new ArrayList<>();
         for (int i = 0; i < tasks.size(); i++) {
             if (tasks.get(i).getStatus() == status)
                 particularTasks.add(tasks.get(i));
@@ -169,13 +230,22 @@ public class Journal {
     public List<Task> getTasks() {
         return tasks;
     }
-
-
-    public History getHistory() {
-        return history;
+    /**
+     * Schedules a task.
+     * @param task
+     */
+    public void schedule(Task task) {
+        Date date = new Date();
+        if (date.getTime() - task.getTargetTime().getTime() < 0)
+            scheduler.schedule(task, task.getTargetTime());
     }
 
-    public void setHistory(History history) {
-        this.history = history;
+    public void schedule() {
+        Date date = new Date();
+        for (Task t : tasks) {
+            if (date.getTime() - t.getTargetTime().getTime() < 0)
+                scheduler.schedule(t, t.getTargetTime());
+        }
     }
+
 }

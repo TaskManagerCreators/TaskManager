@@ -1,40 +1,49 @@
 package taskmanagerlogic;
 
-import java.time.Instant;
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-public class Cleaner implements Runnable {
+import java.util.Iterator;
 
-    private long deltaOfTime;
-    private UserInterface ui;
+@EnableScheduling
+@Component
+@ComponentScan("taskmanagerlogic")
+public class Cleaner {
 
-    public Task getCurrentTask() {
-        return currentTask;
+
+
+    private Journal journal;
+
+
+    @Autowired
+    public Cleaner(Journal journal) {
+        this.journal = journal;
+
     }
 
-    public void setCurrentTask(Task currentTask) {
-        this.currentTask = currentTask;
-    }
-
-    private Task currentTask;
-
-
-    public Cleaner(UserInterface ui, long deltaOfTime) {
-        this.ui = ui;
-        this.deltaOfTime = deltaOfTime;
-    }
-
-    @Override
-    public void run() {
-        currentTask = ui.getCurrentTask();
-        if (currentTask != null && currentTask.getStatus() == Action.COMPLETED) {
-             /*&&
-                    (Date.from(Instant.now()).getTime() - task.getCompletedTime().getTime() == deltaOfTime)*/
-            ui.getJournal().delete(ui.getCurrentTask().getId());
-            ui.getJournal().getHistory().addCleanedTask(currentTask);
+    @Scheduled(fixedDelay = 5000)
+    private void clean() {
+        if (!journal.getTasks().isEmpty()) {
+            for (Iterator<Task> iterator = journal.getTasks().iterator(); iterator.hasNext(); ) {
+                Task task = iterator.next();
+                if (task != null && task.getStatus() == Action.COMPLETED) {
+                    iterator.remove();
+                   journal.getHistory().addCleanedTask(task);
+                    System.out.println("deleted");
+                }
+            }
         }
+    }
 
-        System.out.println("Я работаю");
+    public Journal getJournal() {
+        return journal;
+    }
+
+    public void setJournal(Journal journal) {
+        this.journal = journal;
     }
 }
 

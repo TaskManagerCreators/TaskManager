@@ -4,14 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class HistoryTest {
-    @Test
+
+   /* @Test
     void addCleanedTask() {
         History history = new History();
         int size = history.getCleanedTasks().size();
-        assertEquals(history.getCleanedTasks().size(),size);
+        assertEquals(history.getCleanedTasks().size(), size);
         history.addCleanedTask(new Task());
-        assertNotEquals(size,history.getCleanedTasks().size());
+        assertNotEquals(size, history.getCleanedTasks().size());
     }
 
 
@@ -19,10 +21,10 @@ class HistoryTest {
     void save() {
         History history = new History();
         long size = history.file.length();
-        assertEquals(size,history.file.length());
+        assertEquals(size, history.file.length());
         history.addCleanedTask(new Task());
         history.save();
-        assertNotEquals(size,history.file.length());
+        assertNotEquals(size, history.file.length());
     }
-
+*/
 }

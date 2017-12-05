@@ -3,6 +3,8 @@ package taskmanagerlogic;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import reaction.Output;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +12,9 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class JournalTest {
+
     private Journal journal;
     private List<Task> result;
     private Calendar calendar;
@@ -36,7 +40,7 @@ class JournalTest {
 
     @Test
     public void testDeleteById() {
-        Task task = new Task("test", "test", new Date(), new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
         id = task.getId();
         journal.add(task);
         assertFalse(journal.findById(id).isEmpty());
@@ -46,7 +50,7 @@ class JournalTest {
 
     @Test
     public void testDeleteByName() {
-        Task task = new Task("test", "test", new Date(), new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
         name = task.getName();
         journal.add(task);
         assertFalse(journal.findByName(name).isEmpty());
@@ -57,13 +61,12 @@ class JournalTest {
 
     @Test
     public void testDeleteByStatus() {
-        Task task = new Task("test", "test", new Date(), new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
         status = task.getStatus();
         journal.add(task);
         assertFalse(journal.findByStatus(status).isEmpty());
         journal.delete(status);
         assertTrue(journal.findByStatus(status).isEmpty());
-        //System.out.println(Action.RUNNING.equals(Action.RUNNING));
     }
 
     @Test
@@ -78,7 +81,6 @@ class JournalTest {
 
     @Test
     public void testFindByID() {
-        //result = new ArrayList<>(Arrays.asList(new Task("1", "2", new Date(), null)));
         result = journal.findById(id);
         result.forEach((task) -> {
             if (!task.getId().equals(id)) {
@@ -122,8 +124,8 @@ class JournalTest {
     @Test
     public void testSaveTask() {
         File file = new File(JOURNAL_FILE_NAME);
-        Task task = new Task("task", "purpose", new Date(),
-                new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy")
+                ,  new ArrayList<>());
         long fileSize = file.length();
         try {
             journal.load(file);
@@ -137,8 +139,8 @@ class JournalTest {
 
     @Test
     public void testCleanJournal() {
-        Task task = new Task("task", "purpose", new Date(),
-                new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
+        Task task = new Task("test", "test", new Date(),
+                new Output("Heyyy") ,  new ArrayList<>());
         journal.add(task);
         assertTrue(!journal.getTasks().isEmpty());
         journal.clean();
@@ -157,11 +159,22 @@ class JournalTest {
 
     @Test
     public void testTasksAdd() {
-        Task task = new Task("task", "purpose", new Date(),
-                new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
+        Task task = new Task("test", "test", new Date(),
+                new Output("Heyyy") ,  new ArrayList<>());
         journal.clean();
         journal.add(task);
         assertTrue(!journal.getTasks().isEmpty());
+    }
+
+
+    @Test
+    public void test() {
+        // UserInterface ui = new UserInterface();
+        //System.out.println(ui);
+        //System.out.println(ui.getJournal());
+        //System.out.println(ui.getJournal().getTasks());
+        UserInterface ui = new UserInterface();
+
     }
 
 }
