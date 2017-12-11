@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CleanerTest {
 
-    private UserInterface ui;
+    private Journal journal;
     private long millis;
     private Cleaner cleaner;
     private AnnotationConfigApplicationContext context;
@@ -29,25 +29,24 @@ class CleanerTest {
         context.refresh();
         SpringApplication.run(Cleaner.class);
         cleaner = (Cleaner) context.getBean("cleaner");
-        ui = cleaner.getUi();
-
+        journal = cleaner.getJournal();
     }
 
     @Test()
     public void testClean() {
-        int size = ui.getJournal().getTasks().size();
+        int size = journal.getTasks().size();
         Date date = (Date.from(new Date().toInstant().plusMillis(millis)));
         Task task = new taskmanagerlogic.Task("Test", "Test",
-                date , new Sleep(millis + 1000), new ArrayList<>());
-        ui.getJournal().add(task);
-        ui.schedule(ui.getJournal().getLast());
-        assertFalse(ui.getJournal().getTasks().size() == size);
+                date, new Sleep(millis + 1000), new ArrayList<>());
+        journal.add(task);
+        journal.schedule(journal.getLast());
+        assertFalse(journal.getTasks().size() == size);
         try {
             Thread.sleep(millis * 2 + 5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertTrue(ui.getJournal().getTasks().size() == size);
+        assertTrue(journal.getTasks().size() == size);
     }
 
 }

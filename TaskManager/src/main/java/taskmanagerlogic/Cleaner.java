@@ -8,40 +8,43 @@ import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 
+/**
+ * Used for delete completed tasks
+ * @version 2.0
+ */
 @EnableScheduling
 @Component
 @ComponentScan("taskmanagerlogic")
 public class Cleaner {
 
-    public UserInterface getUi() {
-        return ui;
-    }
-
-    public void setUi(UserInterface ui) {
-        this.ui = ui;
-    }
-
-    private UserInterface ui;
-
+    private Journal journal;
 
     @Autowired
-    public Cleaner(UserInterface userInterface) {
-        this.ui = userInterface;
+    public Cleaner(Journal journal) {
+        this.journal = journal;
 
     }
 
     @Scheduled(fixedDelay = 5000)
     private void clean() {
-        if (!ui.getJournal().getTasks().isEmpty()) {
-            for (Iterator<Task> iterator = ui.getJournal().getTasks().iterator(); iterator.hasNext(); ) {
+        if (!journal.getTasks().isEmpty()) {
+            for (Iterator<Task> iterator = journal.getTasks().iterator(); iterator.hasNext(); ) {
                 Task task = iterator.next();
                 if (task != null && task.getStatus() == Action.COMPLETED) {
                     iterator.remove();
-                    ui.getJournal().getHistory().addCleanedTask(task);
-                    System.out.println("deleted");
+                    journal.getHistory().addCleanedTask(task);
+                    System.out.println("Deleted with id : " + task.getId() + '.');
                 }
             }
         }
+    }
+
+    public Journal getJournal() {
+        return journal;
+    }
+
+    public void setJournal(Journal journal) {
+        this.journal = journal;
     }
 }
 

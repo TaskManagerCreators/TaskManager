@@ -3,6 +3,7 @@ package commands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import taskmanagerlogic.Action;
+import taskmanagerlogic.InterAction;
 import taskmanagerlogic.Journal;
 import taskmanagerlogic.Task;
 
@@ -11,6 +12,12 @@ import java.util.*;
 import java.util.zip.DataFormatException;
 
 
+/**
+ * This class encapsulates user-entered "show" command
+ *
+ * @see InterAction - Used in interaction with ending users
+ * Is multi-threaded
+ */
 @Component("show")
 public class Show implements Command {
 
@@ -18,12 +25,21 @@ public class Show implements Command {
 
     private String command;
 
-    @Autowired
+    //@Autowired
     public Show(Journal journal) {
         this.journal = journal;
     }
 
     public Show() {
+    }
+
+    public Show(String command) {
+        this.command = command;
+    }
+
+    public Show(String command, Journal journal) {
+        this.command = command;
+        this.journal = journal;
     }
 
     public void setCommand(String command) {
@@ -36,12 +52,20 @@ public class Show implements Command {
         arg = command.substring(command.indexOf('-') + 1);
 
         try {
-            collate(arg);
+            if (arg == command)
+                System.out.println(journal);
+            else collate(arg);
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException | ParseException e) {
 
         }
     }
 
+    /**
+     * Splits "show" command , divides arguments and create task
+     *
+     * @param arguments
+     * @throws DataFormatException
+     */
     private void collate(String arguments) throws ParseException {
         List<Task> temp;
         String data, name;

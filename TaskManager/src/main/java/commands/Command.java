@@ -2,10 +2,18 @@ package commands;
 
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.zip.DataFormatException;
 
+/**
+ * Encapsulates each user-entered command
+ *
+ * @see Create
+ * @see Show
+ * @see Delete
+ */
 @Component
 public interface Command extends Runnable {
 
@@ -17,7 +25,6 @@ public interface Command extends Runnable {
 
     String state = "s", id = "id", name = "n", date = "d";
 
-    void execute(String command) throws ParseException, DataFormatException;
+    void execute(String command) throws ParseException, DataFormatException, IOException;
 
-    void setCommand(String command);
 }

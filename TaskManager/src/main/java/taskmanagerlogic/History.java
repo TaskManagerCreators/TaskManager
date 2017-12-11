@@ -8,9 +8,7 @@ import java.util.List;
 
 /**
  * This class is the history of completed tasks.
- * It works with the history.txt file.
- *
- * @Version 1.0
+ * @version 1.0
  */
 @Component("history")
 public class History {
@@ -21,6 +19,14 @@ public class History {
 
     public History() {
         cleanedTasks = new ArrayList<>();
+    }
+
+    public List<Task> getCleanedTasks() {
+        return cleanedTasks;
+    }
+
+    public Date getLastCall() {
+        return lastCall;
     }
 
     @Override

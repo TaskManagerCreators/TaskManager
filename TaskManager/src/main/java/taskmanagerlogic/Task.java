@@ -2,17 +2,19 @@ package taskmanagerlogic;
 
 import org.springframework.stereotype.Component;
 import reaction.Reaction;
-import reaction.Sleep;
+import commands.Command;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /**
- * JavaBean taskmanagerlogic.Task , describes a  task
+ * JavaBean Task , describes a  task
  *
  * @version 1.0
  */
-
 @Component
 public class Task implements Serializable, Runnable {
 
@@ -80,16 +82,24 @@ public class Task implements Serializable, Runnable {
         this.completedTime = completedTime;
     }
 
+    public void setContacts(List<String> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<String> getContacts() {
+        return contacts;
+    }
+
     /**
      * Create new object with values
      *
      * @param name
      * @param describe
      * @param dateTime hh.mm (am|pm) (d|dd).(m|mm).yyyy
+     * @param reaction
      * @param contacts
-     * @see taskmanagerlogic.UserInterface#//datePattern
+     * @see Reaction
      */
-
     public Task(String name, String describe, Date dateTime, Reaction reaction, List<String> contacts) {
         status = Action.SCHEDULED;
         this.name = name;
@@ -100,7 +110,6 @@ public class Task implements Serializable, Runnable {
         id = UUID.randomUUID();
     }
 
-
     public Task(String name, String describe, Date dateTime, List<String> contacts) {
         status = Action.SCHEDULED;
         this.name = name;
@@ -110,8 +119,8 @@ public class Task implements Serializable, Runnable {
         id = UUID.randomUUID();
     }
 
-    public Task() {
 
+    public Task() {
     }
 
     @Override
@@ -119,9 +128,12 @@ public class Task implements Serializable, Runnable {
         String taskString = "ID : " + id + "\nStatus : "
                 + (status == Action.COMPLETED ? "Completed" :
                 (status == Action.RUNNING ? "Running" : "Scheduled"))
-                + "\nName : " + name + "\nDescribe : " + describe + "\nReaction (type , value) : " +
-                "(" + reaction.getType() + " , " + reaction.getValue() +
-                ")\nTask time : " + targetTime;
+                + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + targetTime;
+
+        if (reaction != null) {
+            taskString += "\nReaction (type , value) : (" + reaction.getType().toString() +
+                    " , " + reaction.getValue().toString() + ')';
+        }
 
         if (!contacts.isEmpty()) {
             taskString += "\nContacts : ";

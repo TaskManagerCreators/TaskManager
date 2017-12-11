@@ -6,7 +6,7 @@ public class MailSender implements Reaction {
 
     @Override
     public void perform() {
-
+        throw new UnsupportedOperationException("MAilSender not...");
     }
 
     @Override
