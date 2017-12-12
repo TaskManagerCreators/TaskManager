@@ -13,6 +13,11 @@ import java.util.zip.DataFormatException;
  * @see Create
  * @see Show
  * @see Delete
+ * @see Clean
+ * @see Help
+ * @see Save
+ * @see Show
+ * @see ShowHistory
  */
 @Component
 public interface Command extends Runnable {

@@ -13,6 +13,7 @@ import java.util.zip.DataFormatException;
  *
  * @see InterAction - Used in interaction with ending users
  * Is multi-threaded
+ * @version 1.0
  */
 @Component("delete")
 public class Delete implements Command {

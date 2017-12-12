@@ -16,6 +16,11 @@ import java.util.UUID;
 import static commands.Command.dateFormat;
 import static commands.Command.name;
 
+/**
+ * Controller for rest api.
+ * There are all requests which you can use from web.
+ * @version 1.0
+ */
 @RestController
 public class TaskController {
 

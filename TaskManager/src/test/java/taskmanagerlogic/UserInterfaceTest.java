@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserInterfaceTest {
 
-    private taskmanagerlogic.UserInterface ui;
+    //private taskmanagerlogic.UserInterface ui;
 
     @BeforeEach
     public void initTest() {
 
-        ui = new UserInterface();
+        //ui = new UserInterface();
     }
 
     @Test
@@ -25,7 +25,7 @@ class UserInterfaceTest {
         task.setName("Test");
         task.setDescribe("Test");
         task.setTargetTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
-        ui.getJournal().add(task);
+        //ui.getJournal().add(task);
         assertEquals(false, task.getStatus() == taskmanagerlogic.Action.RUNNING);
         try {
             sleep(10000 + 1000);

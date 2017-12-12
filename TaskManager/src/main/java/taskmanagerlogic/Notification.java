@@ -3,7 +3,8 @@ package taskmanagerlogic;
 import java.util.Date;
 
 /**
- *
+ * This is for notification when a task is ready for that.
+ * @version 1.0
  */
 public class Notification extends Thread {
 

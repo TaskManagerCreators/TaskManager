@@ -1,11 +1,18 @@
 package commands;
 
+import taskmanagerlogic.InterAction;
 import taskmanagerlogic.Journal;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.zip.DataFormatException;
-
+/**
+ * This class encapsulates user-entered "save" command
+ *
+ * @see InterAction - Used in interaction with ending users
+ * Is multi-threaded
+ * @version 1.0
+ */
 public class Save implements Command {
 
     private Journal journal;

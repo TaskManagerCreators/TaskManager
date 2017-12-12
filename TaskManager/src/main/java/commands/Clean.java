@@ -1,10 +1,17 @@
 package commands;
 
+import taskmanagerlogic.InterAction;
 import taskmanagerlogic.Journal;
 
 import java.text.ParseException;
 import java.util.zip.DataFormatException;
-
+/**
+ * This class encapsulates user-entered "clean" command
+ *
+ * @see InterAction - Used in interaction with ending users
+ * Is multi-threaded
+ * @version 1.0
+ */
 public class Clean implements Command {
 
     private Journal journal;

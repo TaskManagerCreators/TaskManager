@@ -3,6 +3,11 @@ package taskmanagerlogic;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * This is a record of a task error.
+ * Maybe this will be deleted.
+ * @version 1.0
+ */
 public class ErrorRecord {
     private UUID id;
     private Class exceptionClass;

@@ -15,6 +15,7 @@ import taskmanagerlogic.Task;
 
 /**
  * Contains beans configuration for CDI
+ * @version 1.0
  */
 @Configuration
 @ComponentScan(basePackages = {"taskmanagerlogic", "commands"})

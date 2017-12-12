@@ -4,14 +4,27 @@ import commands.*;
 
 import java.util.Arrays;
 
+/**
+ * Resolver for creating one of the commands.
+ * @Version 1.0
+ */
 public class CommandResolver {
-
+    /**
+     * A journal with which commands interact.
+     * @see Journal
+     */
     private static Journal journal;
 
     static {
         journal = (Journal) InterAction.context.getBean("journal");
     }
 
+    /**
+     * Creates one of several commands.
+     * @param commandPart
+     * @return Object that implements Command.
+     * @see Command
+     */
     public static Command createCommand(String[] commandPart) {
         String key;
         key = commandPart[0];
@@ -31,6 +44,8 @@ public class CommandResolver {
                 return new Save(journal);
             case "history":
                 return new ShowHistory(journal);
+            case "exit":
+                return new Exit();
             default:
                 throw new IllegalArgumentException("Do not recognized command key");
         }
