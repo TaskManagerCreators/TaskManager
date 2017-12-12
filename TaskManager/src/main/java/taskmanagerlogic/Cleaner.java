@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 
+/**
+ * Used for delete completed tasks
+ * @version 2.0
+ */
 @EnableScheduling
 @Component
 @ComponentScan("taskmanagerlogic")
 public class Cleaner {
 
-
-
     private Journal journal;
-
 
     @Autowired
     public Cleaner(Journal journal) {
@@ -31,8 +32,8 @@ public class Cleaner {
                 Task task = iterator.next();
                 if (task != null && task.getStatus() == Action.COMPLETED) {
                     iterator.remove();
-                   journal.getHistory().addCleanedTask(task);
-                    System.out.println("deleted");
+                    journal.getHistory().addCleanedTask(task);
+                    System.out.println("Deleted with id : " + task.getId() + '.');
                 }
             }
         }

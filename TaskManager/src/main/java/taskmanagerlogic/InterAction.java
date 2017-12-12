@@ -5,6 +5,7 @@ import config.TaskManagerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -15,22 +16,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * Present interacts with ending users
+ * Interacts with ending users
  *
  * @version 1.0
  */
-
+@SpringBootApplication
 @Component("InterAction")
-@ComponentScan({"taskmanagerlogic", "commands"})
+@ComponentScan({"taskmanagerlogic", "commands", "controller"})
 public class InterAction {
 
     private Journal journal;
 
     private Cleaner cleaner;
 
-    @Qualifier("create")
+    /*@Qualifier("create")
     @Autowired
     private Command create;
 
@@ -39,12 +41,17 @@ public class InterAction {
     private Command show;
 
     @Qualifier("delete")
-    @Autowired
-    private Command delete;
+    @Autowired*/
+    private Command command;
 
     private ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
-    private static AnnotationConfigApplicationContext context;
+    /**
+     * AnnotationConfigApplicationContext
+     *
+     * @see TaskManagerConfig
+     */
+    public static AnnotationConfigApplicationContext context;
 
     @Autowired
     public InterAction(Cleaner cleaner, Journal journal) {
@@ -56,13 +63,7 @@ public class InterAction {
 
     }
 
-    /**
-     * Realize interacts with user
-     * Recognizes the user input commands
-     *
-     * @param args
-     * @throws IOException
-     */
+
     public static void main(String[] args) throws IOException, InterruptedException {
         context = new AnnotationConfigApplicationContext();
         context.register(TaskManagerConfig.class);
@@ -72,31 +73,40 @@ public class InterAction {
         interAction.communicate();
     }
 
-
+    /**
+     * Realize interacts with user
+     * Recognizes the user input commands
+     *
+     * @throws IOException
+     */
     public void communicate() throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
         String in, key;
-        String command[];
-        journal.schedule();
+        String commandPart[];
+        if (!journal.getTasks().isEmpty()) {
+            journal.schedule();
+        }
         executor.setMaxPoolSize(10);
         executor.initialize();
         System.out.println("Hey , i'm your task manager.Create task right now.");
         while (true) {
             in = input.readLine().toLowerCase().trim();
-            command = in.split(",");
-            key = command[0];
-            key = key.substring(0, key.split(" ").length < 2 ? key.length() : key.indexOf(" "));
-            switch (key) {
+            commandPart = in.split(",");
+            //<editor-fold desc = "switch">
+            /*switch (key) {
                 case "create": {
-
-                    create.setCommand(Arrays.toString(command));
-                    executor.execute(create, 1000);
                     try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        create.setCommand(Arrays.toString(command));
+                        executor.execute(create, 1000);
+                        //TODO: Fix
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (ArrayIndexOutOfBoundsException e) {
+
                     }
-                    journal.schedule(journal.getLast());
                     continue;
                 }
                 case "show": {
@@ -145,7 +155,7 @@ public class InterAction {
                 }
 
                 case "exit": {
-                   journal.save();
+                    journal.save();
                     input.close();
                     //SpringApplication.exit(context);
                     break;
@@ -159,8 +169,15 @@ public class InterAction {
                     System.out.println("Check 'help'");
                     continue;
                 }
+            }*/
+            //</editor-fold>
+            try {
+                command = CommandResolver.createCommand(commandPart);
+                executor.execute(command, 1000);
+            }catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
             }
-            break;
+
         }
     }
 

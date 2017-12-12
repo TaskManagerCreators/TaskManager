@@ -2,13 +2,18 @@ package commands;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import taskmanagerlogic.Action;
-import taskmanagerlogic.Journal;
+import taskmanagerlogic.*;
 
 import java.text.ParseException;
 import java.util.*;
 import java.util.zip.DataFormatException;
 
+/**
+ * This class encapsulates user-entered "delete" command
+ *
+ * @see InterAction - Used in interaction with ending users
+ * Is multi-threaded
+ */
 @Component("delete")
 public class Delete implements Command {
 
@@ -16,12 +21,17 @@ public class Delete implements Command {
 
     private String command;
 
-    @Autowired
+    //@Autowired
     public Delete(Journal journal) {
         this.journal = journal;
     }
 
     public Delete() {
+    }
+
+    public Delete(String command, Journal journal) {
+        this.command = command;
+        this.journal = journal;
     }
 
     public void setCommand(String command) {
@@ -36,12 +46,19 @@ public class Delete implements Command {
 
         try {
             collate(arg);
+            System.out.println("Command 'delete' executed successfully.");
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException | ParseException e) {
-
+            e.printStackTrace();
         }
 
     }
 
+    /**
+     * Splits "delete" command , divides arguments and create task
+     *
+     * @param arguments
+     * @throws DataFormatException
+     */
     private void collate(String arguments) throws ParseException {
         String data, name;
         UUID id;

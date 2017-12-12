@@ -5,11 +5,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import reaction.Output;
+import reaction.Sleep;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -40,7 +42,7 @@ class JournalTest {
 
     @Test
     public void testDeleteById() {
-        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy"), new ArrayList<>());
         id = task.getId();
         journal.add(task);
         assertFalse(journal.findById(id).isEmpty());
@@ -50,7 +52,7 @@ class JournalTest {
 
     @Test
     public void testDeleteByName() {
-        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy"), new ArrayList<>());
         name = task.getName();
         journal.add(task);
         assertFalse(journal.findByName(name).isEmpty());
@@ -61,7 +63,7 @@ class JournalTest {
 
     @Test
     public void testDeleteByStatus() {
-        Task task = new Task("test", "test", new Date(), new Output("Heyyy") ,  new ArrayList<>());
+        Task task = new Task("test", "test", new Date(), new Output("Heyyy"), new ArrayList<>());
         status = task.getStatus();
         journal.add(task);
         assertFalse(journal.findByStatus(status).isEmpty());
@@ -125,7 +127,7 @@ class JournalTest {
     public void testSaveTask() {
         File file = new File(JOURNAL_FILE_NAME);
         Task task = new Task("test", "test", new Date(), new Output("Heyyy")
-                ,  new ArrayList<>());
+                , new ArrayList<>());
         long fileSize = file.length();
         try {
             journal.load(file);
@@ -140,7 +142,7 @@ class JournalTest {
     @Test
     public void testCleanJournal() {
         Task task = new Task("test", "test", new Date(),
-                new Output("Heyyy") ,  new ArrayList<>());
+                new Output("Heyyy"), new ArrayList<>());
         journal.add(task);
         assertTrue(!journal.getTasks().isEmpty());
         journal.clean();
@@ -160,21 +162,48 @@ class JournalTest {
     @Test
     public void testTasksAdd() {
         Task task = new Task("test", "test", new Date(),
-                new Output("Heyyy") ,  new ArrayList<>());
+                new Output("Heyyy"), new ArrayList<>());
         journal.clean();
         journal.add(task);
         assertTrue(!journal.getTasks().isEmpty());
     }
 
-
     @Test
-    public void test() {
-        // UserInterface ui = new UserInterface();
-        //System.out.println(ui);
-        //System.out.println(ui.getJournal());
-        //System.out.println(ui.getJournal().getTasks());
+    public void testSchedule() {
+        Task task1 = new Task();
+        task1.setName("Task1");
+        task1.setDescribe("Desc1");
+        task1.setTargetTime(Date.from(new Date().toInstant().plusMillis(10000)));
+        task1.setReaction(new Sleep(5000));
 
+        Task task2 = new Task();
+        task2.setName("Task2");
+        task2.setDescribe("Desc2");
+        task2.setTargetTime(Date.from(new Date().toInstant().plusMillis(15000)));
+        task2.setReaction(new Sleep(5000));
+        ArrayList<String> contacts = new ArrayList<>();
+        contacts.add("me");
 
+        task1.setContacts(contacts);
+        task2.setContacts(contacts);
+
+        journal.add(task1);
+        journal.add(task2);
+        journal.schedule();
+
+        try {
+            sleep(11000);
+            assertEquals(Action.RUNNING, task1.getStatus());
+            assertNotEquals(Action.RUNNING, task2.getStatus());
+            sleep(6000);
+            assertEquals(Action.RUNNING, task2.getStatus());
+            assertEquals(Action.COMPLETED, task1.getStatus());
+            sleep(6000);
+            assertEquals(Action.COMPLETED, task2.getStatus()
+            );
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

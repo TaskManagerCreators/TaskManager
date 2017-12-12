@@ -37,8 +37,8 @@ class CleanerTest {
         int size = journal.getTasks().size();
         Date date = (Date.from(new Date().toInstant().plusMillis(millis)));
         Task task = new taskmanagerlogic.Task("Test", "Test",
-                date , new Sleep(millis + 1000), new ArrayList<>());
-       journal.add(task);
+                date, new Sleep(millis + 1000), new ArrayList<>());
+        journal.add(task);
         journal.schedule(journal.getLast());
         assertFalse(journal.getTasks().size() == size);
         try {

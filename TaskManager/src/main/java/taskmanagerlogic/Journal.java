@@ -17,7 +17,6 @@ import java.util.UUID;
  *
  * @version 1.0
  */
-
 @Component("journal")
 public class Journal {
 
@@ -25,6 +24,7 @@ public class Journal {
      * History for deleted tasks
      */
     private History history = new History();
+
     /**
      * Contains serializable tasks
      */
@@ -32,7 +32,7 @@ public class Journal {
 
     private ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
 
-    @Autowired
+    //@Autowired
     public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
@@ -105,6 +105,7 @@ public class Journal {
     public Journal() {
         scheduler.setPoolSize(100);
         scheduler.initialize();
+        load(new File("journal.txt"));
     }
 
     public void add(Task task) {
@@ -122,7 +123,7 @@ public class Journal {
     }
 
     /**
-     * delete by ID
+     * Delete by ID
      *
      * @param id
      */
@@ -138,7 +139,7 @@ public class Journal {
     }
 
     /**
-     * delete by index
+     * Delete by index
      *
      * @param name
      */
@@ -154,11 +155,10 @@ public class Journal {
     }
 
     /**
-     * delete by status
+     * Delete by status
      *
      * @param status
      */
-
     public void delete(Action status) {
         tasks.removeAll(findByStatus(status));
         scheduler.shutdown();
@@ -171,7 +171,7 @@ public class Journal {
     }
 
     /**
-     * delete by period of time
+     * Delete by period of time
      *
      * @param from
      * @param to
@@ -230,6 +230,7 @@ public class Journal {
     public List<Task> getTasks() {
         return tasks;
     }
+
     /**
      * Schedules a task.
      * @param task
@@ -243,8 +244,9 @@ public class Journal {
     public void schedule() {
         Date date = new Date();
         for (Task t : tasks) {
-            if (date.getTime() - t.getTargetTime().getTime() < 0)
+            if (date.getTime() - t.getTargetTime().getTime() < 0) {
                 scheduler.schedule(t, t.getTargetTime());
+            }
         }
     }
 

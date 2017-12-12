@@ -6,6 +6,7 @@ import reaction.MailSender;
 import reaction.Output;
 import reaction.Reaction;
 import reaction.Sleep;
+import taskmanagerlogic.InterAction;
 import taskmanagerlogic.Journal;
 import taskmanagerlogic.Task;
 
@@ -18,6 +19,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.DataFormatException;
 
+/**
+ * This class encapsulates user-entered "create" command
+ *
+ * @see InterAction - Used in interaction with ending users
+ * Is multi-threaded
+ */
 @Component("create")
 public class Create implements Command {
 
@@ -25,10 +32,16 @@ public class Create implements Command {
 
     private String command;
 
-    @Autowired
+   // @Autowired
     public Create(Journal journal) {
         this.journal = journal;
     }
+
+    public Create(String command, Journal journal) {
+        this.command = command;
+        this.journal = journal;
+    }
+
 
     public Create() {
     }
@@ -37,6 +50,14 @@ public class Create implements Command {
         this.command = command;
     }
 
+    /**
+     * Splits "create" command , divides arguments and create task
+     * Compares data of dateTime with pattern
+     *
+     * @param command
+     * @throws DataFormatException
+     * @see #datePattern
+     */
     @Override
     public void execute(String command) throws ParseException, DataFormatException {
         String name, describe, data;
@@ -45,7 +66,7 @@ public class Create implements Command {
         Reaction reaction;
 
         String[] params = command.split(",");
-        if(params.length <= 3) throw new ArrayIndexOutOfBoundsException("Wrong command");
+        if (params.length <= 3) throw new ArrayIndexOutOfBoundsException();
         name = params[0].substring(params[0].indexOf(" ")).trim();
         describe = params[1].trim();
         dateTime = dateFormat.parse(params[2].trim());
@@ -64,9 +85,11 @@ public class Create implements Command {
         Task task = new Task(name, describe, dateTime, reaction, contacts);
 
         journal.add(task);
+
+        journal.schedule(journal.getLast());
     }
 
-    public Reaction parseReaction(String data) {
+    public static Reaction parseReaction(String data) {
         String values[] = data.split("-");
         switch (values[0].trim()) {
             case "sleep":
@@ -76,7 +99,7 @@ public class Create implements Command {
             case "send":
                 return new MailSender();
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException();//сообщение
         }
     }
 
