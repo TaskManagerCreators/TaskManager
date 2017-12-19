@@ -1,0 +1,11 @@
+commands/commandfactory/SaveFactory.class
+commands/commandfactory/CommandFactory.class
+commands/commandfactory/CreateFactory.class
+commands/commandfactory/ShowHistoryFactory.class
+commands/commandfactory/ShowFactory.class
+commands/commandfactory/CleanFactory.class
+taskmanagerlogic/Task.class
+commands/commandfactory/DeleteFactory.class
+commands/commandfactory/ExitFactory.class
+commands/commandfactory/HelpFactory.class
+taskmanagerlogic/Journal.class

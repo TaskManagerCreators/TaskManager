@@ -6,6 +6,7 @@ import java.util.Date;
  * This is for notification when a task is ready for that.
  * @version 1.0
  */
+@Deprecated
 public class Notification extends Thread {
 
     private Task task;
