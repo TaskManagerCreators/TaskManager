@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 /**
  * Used for delete completed tasks
+ *
  * @version 2.0
  */
 @EnableScheduling
@@ -22,7 +23,6 @@ public class Cleaner {
     @Autowired
     public Cleaner(Journal journal) {
         this.journal = journal;
-
     }
 
     @Scheduled(fixedDelay = 5000)

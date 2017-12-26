@@ -1,10 +1,11 @@
 package taskmanagerlogic;
 
-import commands.*;
-import commands.commandfactory.CommandFactory;
-import commands.commandfactory.CreateFactory;
+import commands.Command;
+import commands.commandfactory.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Resolver for creating one of the commands.
@@ -19,11 +20,19 @@ public class CommandResolver {
      */
     private static Journal journal;
 
-    private static CommandFactory factory;
-
     static {
-        journal = (Journal) InterAction.context.getBean("journal");
+        //journal = (Journal) InterAction.context.getBean("journal");
     }
+
+
+    @Autowired
+    private CommandFactory commandFactory;
+
+    private static final Map<String , String[]> keeper = new HashMap<String, String[]>(){{
+        put("create" , new String[]{"commandPart" , "journal"});
+        put("help" , null);
+
+    }};
 
     /**
      * Creates one of several commands.
@@ -32,31 +41,33 @@ public class CommandResolver {
      * @return Object that implements Command.
      * @see Command
      */
-    public static Command createCommand(String[] commandPart) {
+    public  Command createCommand(String[] commandPart) {
         String key;
         key = commandPart[0];
         key = key.substring(0, key.split(" ").length < 2 ? key.length() : key.indexOf(" "));
         switch (key) {
             case "create":
-                factory = new CreateFactory();
-                factory.produceCommand(commandPart , journal);
-                return new Create(Arrays.toString(commandPart), journal);
+                StringBuilder builder = new StringBuilder();
+                for (String s : commandPart) {
+                    builder.append(s + ',');
+                }
+                return new CreateFactory().produceCommand(builder.substring(0, builder.lastIndexOf(",")), journal);
             case "show":
-                return new Show(commandPart[0], journal);
+                return new ShowFactory().produceCommand(commandPart[0], journal);
             case "delete":
-                return new Delete(commandPart[0], journal);
+                return new DeleteFactory().produceCommand(commandPart[0], journal);
             case "clean":
-                return new Clean(journal);
+                return new CleanFactory().produceCommand(journal);
             case "help":
-                return new Help();
+                return new HelpFactory().produceCommand();
             case "save":
-                return new Save(journal);
+                return new SaveFactory().produceCommand(journal);
             case "history":
-                return new ShowHistory(journal);
+                return new ShowHistoryFactory().produceCommand(journal);
             case "exit":
-                return new Exit();
+                return new ExitFactory().produceCommand();
             default:
-                throw new IllegalArgumentException("Do not recognized command key");
+                throw new IllegalArgumentException("Do not recognized command key.");
         }
     }
 }

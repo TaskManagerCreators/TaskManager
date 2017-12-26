@@ -1,23 +1,20 @@
 package taskmanagerlogic;
 
 import commands.Command;
-import config.DatabaseConfiguration;
-import config.TaskManagerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
-import reaction.Sleep;
+import reaction.Output;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Interacts with ending users
@@ -46,19 +43,15 @@ public class InterAction {
     private Command command;
 
     @Autowired
-    TaskRepository taskRepository;
+    MongoTemplate mongoOperation;
 
-    @Autowired
-    MongoOperations mongoOperations;
+
+
+    public static ApplicationContext applicationContext;
+
 
     private ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
-    /**
-     * AnnotationConfigApplicationContext
-     *
-     * @see TaskManagerConfig
-     */
-    public static AnnotationConfigApplicationContext context;
 
     @Autowired
     public InterAction(Cleaner cleaner, Journal journal) {
@@ -70,26 +63,29 @@ public class InterAction {
 
     }
 
-
     public static void main(String[] args) throws IOException, InterruptedException {
-        context = new AnnotationConfigApplicationContext();
-        context.register(DatabaseConfiguration.class, TaskManagerConfig.class);
-        context.refresh();
-        //MongoOperations mongoOperation = (MongoOperations) context.getBean("mongoTemplate");
-        SpringApplication.run(Cleaner.class);
-        InterAction interAction = (InterAction) context.getBean("InterAction");
+        //ApplicationContext context = new AnnotationConfigApplicationContext(TaskManagerConfig.class, DatabaseConfiguration.class);
+        //System.out.println(context);
+        //Service service = context.getBean(Service.class);
+        //SpringApplication.run(InterAction.class);
+        //context = new AnnotationConfigApplicationContext("config");
+        //context.register(DatabaseConfiguration.class, TaskManagerConfig.class);
+        //context.refresh();
+        //SpringApplicationBuilder builder = new SpringApplicationBuilder(DatabaseConfiguration.class, TaskManagerConfig.class);
+        //builder.context().refresh();
+        //builder.run();
+        //System.out.println(context);
+        //applicationContext = SpringApplication.run(InterAction.class);
+        //ApplicationContextProvider contextProvider = new ApplicationContextProvider();
+        //System.out.println(contextProvider.getApplicationContext());
+        applicationContext = SpringApplication.run(InterAction.class);
 
-       /* Task task = new Task(
-                "Test",
-                "Test",
-                new Date(),
-                new Sleep(1000),
-                new ArrayList<>()
-        );
-        mongoOperation.save(task);
-        System.out.println("Saved user : " + task);*/
+        InterAction interAction = (InterAction) (applicationContext.getBean("InterAction"));
+        Journal journal = (Journal) applicationContext.getBean("journal");
+        //System.out.println(journal.getMongoOperations());
         interAction.communicate();
     }
+
 
     /**
      * Realize interacts with user
@@ -98,10 +94,12 @@ public class InterAction {
      * @throws IOException
      */
     public void communicate() throws IOException {
-        System.out.println(taskRepository);
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        String in, key;
-        String commandPart[];
+        System.out.println(mongoOperation);
+        Task task = new Task("task", "purpose", new Date(), new Output("test"),
+                new ArrayList<>(Arrays.asList(new String[]{"Kate", "Paul"})));
+        //mongoOperation.insert(task);
+        /*BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        String in, commandPart[];
         if (!journal.getTasks().isEmpty()) {
             journal.schedule();
         }
@@ -189,17 +187,20 @@ public class InterAction {
                     continue;
                 }
             }*/
-            //</editor-fold>
-            try {
+        //</editor-fold>
+            /*try {
                 command = CommandResolver.createCommand(commandPart);
                 executor.execute(command, 1000);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
 
-        }
+        }*/
     }
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
 }
 
 

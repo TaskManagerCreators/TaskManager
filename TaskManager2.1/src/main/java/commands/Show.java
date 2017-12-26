@@ -1,6 +1,5 @@
 package commands;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import taskmanagerlogic.Action;
 import taskmanagerlogic.InterAction;
@@ -8,7 +7,10 @@ import taskmanagerlogic.Journal;
 import taskmanagerlogic.Task;
 
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import java.util.zip.DataFormatException;
 
 
@@ -91,7 +93,8 @@ public class Show implements Command {
 
             case Command.id:
                 id = UUID.fromString(data.trim());
-                temp = journal.findById(id);
+                temp = new ArrayList<>();
+                temp.add(journal.findById(id));
                 break;
 
             case Command.name:

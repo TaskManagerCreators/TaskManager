@@ -2,10 +2,7 @@ package commands;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import reaction.MailSender;
-import reaction.Output;
-import reaction.Reaction;
-import reaction.Sleep;
+import reaction.*;
 import taskmanagerlogic.InterAction;
 import taskmanagerlogic.Journal;
 import taskmanagerlogic.Task;
@@ -91,17 +88,7 @@ public class Create implements Command {
     }
 
     public static Reaction parseReaction(String data) {
-        String values[] = data.split("-");
-        switch (values[0].trim()) {
-            case "sleep":
-                return new Sleep(Long.valueOf(values[1].replace(']', ' ').trim()));
-            case "output":
-                return new Output(values[1].replace(']', ' ').trim());
-            case "send":
-                return new MailSender();
-            default:
-                throw new IllegalArgumentException();//сообщение
-        }
+        return ReactionResolver.create(data);
     }
 
     public boolean dateMatcher(Date date) {

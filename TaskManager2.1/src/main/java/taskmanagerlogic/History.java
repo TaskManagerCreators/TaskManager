@@ -1,5 +1,6 @@
 package taskmanagerlogic;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -8,9 +9,11 @@ import java.util.List;
 
 /**
  * This class is the history of completed tasks.
+ *
  * @version 1.0
  */
 @Component("history")
+@Document(collection = "history")
 public class History {
 
     private Date lastCall;

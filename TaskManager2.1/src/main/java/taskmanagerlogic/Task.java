@@ -1,11 +1,9 @@
 package taskmanagerlogic;
 
-//import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 import reaction.Reaction;
-import commands.Command;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -131,30 +129,24 @@ public class Task implements Serializable, Runnable {
 
     @Override
     public String toString() {
-        String taskString="";
-        try {
-                taskString = "ID : " + id + "\nStatus : "
-                    + (status == Action.COMPLETED ? "Completed" :
-                    (status == Action.RUNNING ? "Running" : "Scheduled"))
-                    + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + targetTime;
+        String taskString = "";
+        taskString = "ID : " + id + "\nStatus : "
+                + (status == Action.COMPLETED ? "Completed" :
+                (status == Action.RUNNING ? "Running" : "Scheduled"))
+                + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + targetTime;
 
-            if (reaction != null) {
-                taskString += "\nReaction (type , value) : (" + reaction.getType().toString() +
-                        " , " + reaction.getValue().toString() + ')';
-            }
-
-            if (!contacts.isEmpty()) {
-                taskString += "\nContacts : ";
-                for (String contact : contacts) {
-                    taskString += contact + " , ";
-                }
-
-                taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
-            }
+        if (reaction != null) {
+            taskString += "\nReaction (type , value) : (" + reaction.getType().toString() +
+                    " , " + reaction.getValue().toString() + ')';
         }
-        catch (Exception e){
-            errorRecord = new ErrorRecord(UUID.randomUUID() , e.getClass() , "An error in the output string." , e.getStackTrace() , this , new Date());
 
+        if (!contacts.isEmpty()) {
+            taskString += "\nContacts : ";
+            for (String contact : contacts) {
+                taskString += contact + " , ";
+            }
+
+            taskString = taskString.substring(0, taskString.lastIndexOf(" ,"));
         }
         return taskString + '\n';
     }
@@ -162,8 +154,34 @@ public class Task implements Serializable, Runnable {
     @Override
     public void run() {
         status = Action.RUNNING;
-        Notification notification = new Notification(this);
-        notification.start();
+        System.out.println("You`ve got a task!!!!");
+        this.setCompletedTime(new Date());
+        System.out.println("Name : " + this.getName() + "\nDescribe : " + this.getDescribe() + "\nComplete at " + this.getCompletedTime());
+        try {
+            this.getReaction().perform();
+        } catch (Exception e) {
+            String message = "Some problem while ";
+            switch (reaction.getType()) {
+                case SLEEP:
+                    message += "sleeping.";
+                    break;
+                case OUTPUT:
+                    message += "printing.";
+                    break;
+                case SENDER:
+                    message += "sending email";
+                    break;
+            }
+            /*if (reaction.getType() == ReactionType.OUTPUT) {
+                message += "printing.";
+            } else if (reaction.getType() == ReactionType.SLEEP) {
+                message += "sleeping.";
+            } else {
+                message += "sending email";
+            }*/
+            this.errorRecord = new ErrorRecord(this.id, e.getClass(), message, e.getStackTrace(), new Date());
+        }
+        this.setStatus(taskmanagerlogic.Action.COMPLETED);
     }
 
     public static final Comparator<Task> COMPARE_BY_TIME = Comparator.comparing(task -> task.targetTime);

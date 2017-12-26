@@ -23,7 +23,7 @@ public class Save implements Command {
 
     @Override
     public void execute(String command) throws ParseException, DataFormatException, IOException {
-        journal.save();
+        //journal.save();
         System.out.println("Command 'save' executed successfully.");
     }
 
