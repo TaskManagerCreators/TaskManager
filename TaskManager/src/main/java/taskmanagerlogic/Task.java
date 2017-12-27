@@ -1,5 +1,6 @@
 package taskmanagerlogic;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.stereotype.Component;
 import reaction.Reaction;
 import commands.Command;
@@ -24,6 +25,7 @@ public class Task implements Serializable, Runnable {
     private UUID id;
     private String name;
     private String describe;
+    @JsonFormat(shape = JsonFormat.Shape.STRING , pattern = "HH:mm dd.MM.yyyy")
     private Date targetTime;
     private Date completedTime;
     private Reaction reaction;

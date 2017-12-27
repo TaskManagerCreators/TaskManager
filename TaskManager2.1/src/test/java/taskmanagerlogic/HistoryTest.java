@@ -1,6 +1,8 @@
 package taskmanagerlogic;
 
 import org.junit.jupiter.api.Test;
+import taskManagerCreators.taskmanagerlogic.History;
+import taskManagerCreators.taskmanagerlogic.Task;
 
 import static org.junit.jupiter.api.Assertions.*;
 

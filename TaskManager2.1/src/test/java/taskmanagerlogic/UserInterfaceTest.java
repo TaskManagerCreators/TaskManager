@@ -21,18 +21,18 @@ class UserInterfaceTest {
 
     @Test
     public void testExecuting() {
-        taskmanagerlogic.Task task = new taskmanagerlogic.Task();
+        taskManagerCreators.taskmanagerlogic.Task task = new taskManagerCreators.taskmanagerlogic.Task();
         task.setName("Test");
         task.setDescribe("Test");
         task.setTargetTime(Date.from(new Date().toInstant().plusMillis(1000 * 10)));
         //ui.getJournal().add(task);
-        assertEquals(false, task.getStatus() == taskmanagerlogic.Action.RUNNING);
+        assertEquals(false, task.getStatus() == taskManagerCreators.taskmanagerlogic.Action.RUNNING);
         try {
             sleep(10000 + 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assertEquals(true, task.getStatus() == taskmanagerlogic.Action.COMPLETED);
+        assertEquals(true, task.getStatus() == taskManagerCreators.taskmanagerlogic.Action.COMPLETED);
 
     }
 

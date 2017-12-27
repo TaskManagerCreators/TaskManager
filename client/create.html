@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html ng-app="create">
+  <head>
+    <title>Creating tasks</title>
+    <script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+    <script src="scripts/create.js"></script>
+      <link rel="StyleSheet" type="text/css" href="styles/create.css" />
+  </head>
+  <body >
+    <div ng-controller="createController">
+    <form>
+      <div>
+        <p>Enter name</p>
+        <input type="text" ng-model="name" id="nameInput" required placeholder="Enter name"></input>
+      </div>
+      <div>
+        <p>Enter describe</p>
+        <input type="text" ng-model="describe" id="describeInput" required></input>
+      </div>
+      <div>
+        <p>Enter date</p>
+        <input type="time" ng-model="time" id="timeInput"></input>
+
+        <input type="date" data-date-format="DD.MM.YYYY"  ng-model="date" id="dateInput" required></input>
+      </div>
+      <div>
+        <p>Enter reaction</p>
+        <input type="text" ng-model="reactionType" id="reactionTypeInput" required></input>
+        <input type="text" ng-model="reactionValue" id="reactionValueInput"></input>
+      </div>
+    </form>
+    <button type="submit" ng-click="create(name , describe , time , date , reactionType , reactionValue)">Create</button>
+    <div ng-class="{error:isError}">{{msg}}</div>
+  </div>
+  </body>
+</html>

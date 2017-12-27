@@ -1,0 +1,33 @@
+.error{
+  color: red;
+  font-family: Arial;
+
+}
+th{
+  border-right: 2px solid gray;
+}
+td{
+  border-right: 2px solid gray;
+  font-family: Courier new;
+  text-align: center;
+}
+.idDiv{
+  font-family: Courier new;
+  float : right;
+  padding-left: 20px;
+}
+.nameDiv{
+  font-family: Courier new;
+  float: left;
+}
+.allDiv{
+  font-family: Courier new;
+  clear: both;
+}
+table{
+  width: 100%;
+  border: 1px solid gray;
+}
+.noTaskTable{
+  
+}

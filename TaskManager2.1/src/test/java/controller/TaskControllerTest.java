@@ -1,8 +1,8 @@
 package controller;
 
 
-import commands.Create;
-import config.TaskManagerConfig;
+import taskManagerCreators.commands.Create;
+import taskManagerCreators.config.TaskManagerConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
@@ -10,10 +10,10 @@ import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.http.converter.json.GsonFactoryBean;
-import taskmanagerlogic.Cleaner;
-import taskmanagerlogic.CommandResolver;
-import taskmanagerlogic.InterAction;
-import taskmanagerlogic.Task;
+import taskManagerCreators.taskmanagerlogic.Cleaner;
+import taskManagerCreators.taskmanagerlogic.CommandResolver;
+import taskManagerCreators.taskmanagerlogic.InterAction;
+import taskManagerCreators.taskmanagerlogic.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;

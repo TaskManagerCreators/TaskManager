@@ -4,8 +4,11 @@ import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import reaction.Output;
-import reaction.Sleep;
+import taskManagerCreators.reaction.Output;
+import taskManagerCreators.reaction.Sleep;
+import taskManagerCreators.taskmanagerlogic.Action;
+import taskManagerCreators.taskmanagerlogic.Journal;
+import taskManagerCreators.taskmanagerlogic.Task;
 
 import java.io.File;
 import java.io.IOException;

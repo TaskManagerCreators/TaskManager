@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html ng-app="delete">
+  <head>
+    <title>Deleting tasks</title>
+    <script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+    <script src="scripts/delete.js"></script>
+    <link rel="StyleSheet" type="text/css" href="styles/index.css" />
+  </head>
+  <body>
+    <div ng-controller="deleteController">
+			<div class="nameDiv">
+			<p>
+				Enter name of the task to delete that.<br>
+			</p>
+			<input type="text" id="nameInput" ng-model="name"></input>
+			<button id="byNameBtn" type="submit" ng-click="deleteByName()">Enter name</button>
+			<p>Entered name is {{name}}</p>
+		</div>
+
+
+		<div class="idDiv">
+			<p>Enter id of the task to delete that.</p>
+			<input type="text" id="idInput" ng-model="id"></input>
+			<button id="byIdBtn" type="submit" ng-click="deleteById()">Enter Id</button>
+			<p>Entered Id is {{id}}</p>
+		</div>
+    <div class="allDiv">
+    <button id="allBtn" type="submit" ng-click="deleteAll()">Delete all tasks.</button>
+    </div>
+    <div ng-class="{error:isError}">{{msg}}</div>
+		</div>
+  </body>
+</html>

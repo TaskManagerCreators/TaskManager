@@ -2,6 +2,7 @@ package controller;
 
 import commands.Create;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reaction.Reaction;
 import taskmanagerlogic.*;
@@ -21,6 +22,7 @@ import static commands.Command.name;
  * There are all requests which you can use from web.
  * @version 1.0
  */
+@CrossOrigin
 @RestController
 public class TaskController {
 
@@ -35,10 +37,16 @@ public class TaskController {
      *
      * @param name
      */
-    @RequestMapping(value = "/tasks/name/{name}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/tasks",produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public @ResponseBody
-    List<Task> getTasksByName(@PathVariable("name") String name) {
+    List<Task> getTasksByName(@RequestParam(value = "name") String name) {
         return journal.findByName(name);
+    }
+    @RequestMapping(value = "tasks/all" , method = RequestMethod.GET)
+    public @ResponseBody
+    List<Task> getAllTasks(){
+        return journal.getTasks();
     }
 
     /**

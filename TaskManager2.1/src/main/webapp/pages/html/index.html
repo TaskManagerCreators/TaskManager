@@ -1,0 +1,22 @@
+<!doctype html>
+<html ng-app="">
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js"></script>
+</head>
+<body>
+<script>
+app.controller("defaultCtrl", ["$scope", function($scope) {
+	$scope.sayHello = function (name) {
+		alert("Привет, " + name);
+	}
+}])
+</script>
+    <div ng-controller="defaultCtrl">
+	    <label>Имя:</label>
+	    <input type="text" ng-model="yourName">
+	    <hr>
+	    <h1>Привет,  { { yourName  } }!</h1>
+		<button ng-click="sayHello(yourName)">Сказать привет</button>
+    </div>
+</body>
+</html>

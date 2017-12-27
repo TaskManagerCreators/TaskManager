@@ -1,8 +1,10 @@
 package commands;
 
 import org.junit.jupiter.api.Test;
-import taskmanagerlogic.Action;
-import taskmanagerlogic.Journal;
+import taskManagerCreators.commands.Create;
+import taskManagerCreators.commands.Delete;
+import taskManagerCreators.taskmanagerlogic.Action;
+import taskManagerCreators.taskmanagerlogic.Journal;
 
 import java.text.ParseException;
 import java.util.zip.DataFormatException;

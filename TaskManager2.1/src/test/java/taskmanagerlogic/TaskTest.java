@@ -4,7 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpRequest;
-import reaction.Output;
+import taskManagerCreators.reaction.Output;
+import taskManagerCreators.taskmanagerlogic.Task;
 
 import java.io.BufferedReader;
 import java.io.IOException;

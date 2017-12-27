@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html ng-app="main">
+	<head>
+		<title>The main page of the taskmanager.</title>
+		<script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+		<script src="scripts/app.js"></script>
+		<link rel="StyleSheet" type="text/css" href="styles/index.css"/>
+	</head>
+	<body>
+
+
+		<div ng-controller="mainController">
+			<div class="nameDiv">
+			<p>
+				Enter name of the task to get that.<br>
+			</p>
+			<input type="text" id="nameInput" ng-model="name"></input>
+			<button id="byNameBtn" type="submit" ng-click="getByName()">Enter name</button>
+			<p>Entered name is {{name}}</p>
+		</div>
+
+
+		<div class="idDiv">
+			<p>Enter id of the task to get that.</p>
+			<input type="text" id="idInput" ng-model="ids"></input>
+			<button id="byIdBtn" type="submit" ng-click="getById()">Enter Id</button>
+			<p>Entered Id is {{ids}}</p>
+		</div>
+		<div class="allDiv">
+			<button id="allBtn" type="submit" ng-click="getAll()">Show all tasks.</button>
+			<table  id="tasks" class="taskTable">
+				<tr ng-class = "{error:isError}">
+					<th>Name</th>
+					<th>Describe</th>
+					<th>Date</th>
+					<th>Reaction</th>
+
+				</tr>
+				<tr ng-repeat="task in tasks">
+					<td>{{task.name}}</td>
+					<td>{{task.describe}}</td>
+					<td>{{task.targetTime}}</td>
+					<td>{{task.reaction.type}} {{task.reaction.value}}</td>
+
+				</tr>
+			</table>
+			<div>
+		</div>
+
+	</body>
+</html>

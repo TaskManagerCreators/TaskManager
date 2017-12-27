@@ -1,7 +1,9 @@
 package commands;
 
 import org.junit.jupiter.api.Test;
-import taskmanagerlogic.Journal;
+import taskManagerCreators.commands.Command;
+import taskManagerCreators.commands.Create;
+import taskManagerCreators.taskmanagerlogic.Journal;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

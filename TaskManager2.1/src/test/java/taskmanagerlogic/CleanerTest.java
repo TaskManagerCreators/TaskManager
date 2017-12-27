@@ -1,11 +1,14 @@
 package taskmanagerlogic;
 
-import config.TaskManagerConfig;
+import taskManagerCreators.config.TaskManagerConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import reaction.Sleep;
+import taskManagerCreators.reaction.Sleep;
+import taskManagerCreators.taskmanagerlogic.Cleaner;
+import taskManagerCreators.taskmanagerlogic.Journal;
+import taskManagerCreators.taskmanagerlogic.Task;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +39,7 @@ class CleanerTest {
     public void testClean() {
         int size = journal.getTasks().size();
         Date date = (Date.from(new Date().toInstant().plusMillis(millis)));
-        Task task = new taskmanagerlogic.Task("Test", "Test",
+        Task task = new taskManagerCreators.taskmanagerlogic.Task("Test", "Test",
                 date, new Sleep(millis + 1000), new ArrayList<>());
         journal.add(task);
         journal.schedule(journal.getLast());
