@@ -5,6 +5,9 @@ var app = angular.module('main' , []);
      $http.defaults.useXDomain = true;
      $scope.isError = false;
      $scope.getByName = function(){
+     if($scope.name == null || $scope.name == '') {
+        $scope.getAll();
+     }
     $http.get('http://127.0.0.1:8080/tasks?name='+$scope.name).
     success(function(data , status){
       $scope.tasks=data;
@@ -31,5 +34,14 @@ var app = angular.module('main' , []);
     }).error(function(data , status){
       $scope.isError = true;
     });
+  };
+  $scope.deleteById = function (task) {
+      $http.delete('http://127.0.0.1:8080/tasks?id='+task.id).
+      success(function(){
+          $scope.isError = false;
+          $scope.getAll();
+      }).error(function(data){
+          $scope.isError = true;
+      });
   };
 });

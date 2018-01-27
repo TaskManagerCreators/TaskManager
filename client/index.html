@@ -27,25 +27,24 @@
 			<p>Entered Id is {{ids}}</p>
 		</div>
 		<div class="allDiv">
-			<button id="allBtn" type="submit" ng-click="getAll()">Show all tasks.</button>
 			<table  id="tasks" class="taskTable">
 				<tr ng-class = "{error:isError}">
 					<th>Name</th>
 					<th>Describe</th>
 					<th>Date</th>
 					<th>Reaction</th>
+                    <th></th>
 
 				</tr>
 				<tr ng-repeat="task in tasks">
-					<td>{{task.name}}</td>
-					<td>{{task.describe}}</td>
-					<td>{{task.targetTime}}</td>
-					<td>{{task.reaction.type}} {{task.reaction.value}}</td>
-
+					<td ng-class="{error:isError}">{{task.name}}</td>
+					<td ng-class="{error:isError}">{{task.describe}}</td>
+					<td ng-class="{error:isError}">{{task.targetTime}}</td>
+					<td ng-class="{error:isError}">{{task.reaction.type}} {{task.reaction.value}}</td>
+                    <td><button type="submit" ng-click="deleteById(task)">Delete</button></td>
 				</tr>
 			</table>
-			<div>
-		</div>
-
+        </div>
+        </div>
 	</body>
 </html>

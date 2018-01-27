@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+    <script src="scripts/test.js"></script>
+    <script>"https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc.5/angular-material.js"</script>
+    <script>"https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"</script>
+    <script>"https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"</script>
+    <script>"https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"</script>
+    <script>"https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"</script>
+    <script>"https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"</script>
+    <script>"https://rawgit.com/Crawlink/material-angular-paging/master/build/dist.min.js"</script>
+
+</head>
+<body>
+<div ng-app="DemoApp" flex layout="column">
+    <div flex ng-controller="MainControllerr" layout="column">
+        <section flex>
+            <md-content layout-padding="">
+                <h1>Material Angular Paging demo</h1>
+                <div>Loaded data form Page <strong>{{currentPage}}</strong></div>
+
+            </md-content>
+        </section>
+
+        <section layout="row" layout-padding="">
+
+            <cl-paging flex cl-pages="paging.total" , cl-steps="6" , cl-page-changed="paging.onPageChanged()" , cl-align="center center" , cl-current-page="paging.current"></cl-paging>
+
+        </section>
+
+    </div>
+</div>
+</body>
+</html>
