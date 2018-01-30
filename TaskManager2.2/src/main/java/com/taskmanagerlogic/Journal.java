@@ -1,10 +1,14 @@
 package com.taskmanagerlogic;
 
+import com.configuration.DatabaseConfiguration;
+import com.mongodb.DBCursor;
 import com.repositories.JournalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -86,7 +90,29 @@ public class Journal {
         journalRepository.deleteAll();
     }
 
-    public List<Task> getTasks() {
+    public List<Task> getTasks(String next) {
+        List<Task> result = new ArrayList<>();
+        try {
+            int page = 20 * Integer.valueOf(next);
+            List<Task> temp = journalRepository.findAll();
+            if(page <= temp.size()) {
+                for (int i = page - 20; i < page; i++) {
+                    result.add(temp.get(i));
+                }
+            }
+            else{
+                for (int i = page - 20; i < temp.size(); i++) {
+                    result.add(temp.get(i));
+                }
+            }
+
+        }
+        catch(NumberFormatException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public List<Task> getTasks(){
         return journalRepository.findAll();
     }
 

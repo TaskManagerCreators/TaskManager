@@ -5,11 +5,12 @@
 		<script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
 		<script src="scripts/app.js"></script>
 		<link rel="StyleSheet" type="text/css" href="styles/index.css"/>
+
 	</head>
 	<body>
 
 
-		<div ng-controller="mainController">
+		<div ng-controller="mainController" ng-init="getAll()">
 			<div class="nameDiv">
 			<p>
 				Enter name of the task to get that.<br>
@@ -19,15 +20,8 @@
 			<p>Entered name is {{name}}</p>
 		</div>
 
-
-		<div class="idDiv">
-			<p>Enter id of the task to get that.</p>
-			<input type="text" id="idInput" ng-model="ids"></input>
-			<button id="byIdBtn" type="submit" ng-click="getById()">Enter Id</button>
-			<p>Entered Id is {{ids}}</p>
-		</div>
 		<div class="allDiv">
-			<table  id="tasks" class="taskTable">
+			<table  id="tasks" class="showTable">
 				<tr ng-class = "{error:isError}">
 					<th>Name</th>
 					<th>Describe</th>
@@ -44,7 +38,53 @@
                     <td><button type="submit" ng-click="deleteById(task)">Delete</button></td>
 				</tr>
 			</table>
+			<select ng-model="nextPage" ng-options="item for item in pages">
+			</select>
+			<button type="submit" ng-click="getAll()">Go to that page</button>
         </div>
+			<div class="createDiv">
+				<form>
+					<div>
+						<p>Enter name</p>
+						<input type="text" ng-model="taskName" id="taskName" required placeholder="Enter name"></input>
+					</div>
+					<div>
+						<p>Enter describe</p>
+						<input type="text" ng-model="describe" id="describeInput" required></input>
+					</div>
+					<div>
+						<p>Enter date</p>
+						<input type="time" ng-model="time" id="timeInput"></input>
+
+						<input type="date" data-date-format="DD.MM.YYYY"  ng-model="date" id="dateInput" required></input>
+					</div>
+					<div>
+						<p>Enter reaction</p>
+						<select ng-model="reactionType">
+							<option value="OUTPUT">
+								OUTPUT
+							</option>
+							<option value="SLEEP">
+								SLEEP
+							</option>
+						</select>
+						<input type="text" ng-model="reactionValue" id="reactionValueInput"></input>
+					</div>
+					<button type="submit" ng-click="create(taskName , describe , time , date , reactionType , reactionValue)">Create task</button>
+					<div ng-class="{error:isError}">{{msg}}</div>
+				</form>
+
+				<!--<table>
+					<tr>
+						<th>Time</th>
+						<th>Id</th>
+					</tr>
+					<tr ng-repeat="hour in hours">
+						<td>{{hour}}</td>
+						<td>{{days}}</td>
+					</tr>
+				</table>-->
+			</div>
         </div>
 	</body>
 </html>

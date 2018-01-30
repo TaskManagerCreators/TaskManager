@@ -12,7 +12,7 @@ app.controller('createController' , function($scope , $http){
     var task = {
       name:name,
       describe:describe,
-      targetTime:time+' '+date,
+      targetTime:date+' '+time,
       completedTime: null,
       reaction:{value:reactionValue,type:reactionType},
       contacts:null,

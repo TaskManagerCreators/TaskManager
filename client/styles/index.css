@@ -22,12 +22,21 @@ td{
 }
 .allDiv{
   font-family: Courier new;
-  clear: both;
+  clear: left;
+    width: 50%;
+    float: left;
+
 }
-table{
-  width: 100%;
+.showTable{
   border: 1px solid gray;
+}
+.createDiv{
+    float: left;
+
 }
 .noTaskTable{
   
+}
+select{
+    width: 50px;
 }

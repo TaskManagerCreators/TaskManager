@@ -31,11 +31,11 @@ public class Task implements Serializable, Runnable {
     private UUID id;
     private String name;
     private String describe;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
+    private int size;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
     private Date targetTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
     private Date completedTime;
 
     public Reaction getReaction() {
@@ -130,10 +130,12 @@ public class Task implements Serializable, Runnable {
         this.reaction = reaction;
         this.contacts = contacts;
         id = UUID.randomUUID();
+        size = 0;
     }
 
     public Task() {
         id = UUID.randomUUID();
+        size = 0;
     }
 
     @Override
@@ -182,4 +184,11 @@ public class Task implements Serializable, Runnable {
     }
 
 
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getSize() {
+        return size;
+    }
 }

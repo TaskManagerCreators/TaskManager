@@ -53,10 +53,12 @@ public class TaskController {
         return journal.findByStatus(Action.valueOf(status.toUpperCase()));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET , params = "next")
     public @ResponseBody
-    List<Task> getAllTasks() {
-        return journal.getTasks();
+    List<Task> getAllTasks(@RequestParam("next") String next) {
+        List<Task> result = journal.getTasks(next);
+        result.get(0).setSize(journal.getTasks().size());
+        return result;
     }
 
 
