@@ -3,7 +3,7 @@ package com.commands;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.taskmanagerlogic.Action;
-import com.taskmanagerlogic.InterAction;
+import com.InterAction;
 import com.taskmanagerlogic.Journal;
 import com.taskmanagerlogic.Task;
 

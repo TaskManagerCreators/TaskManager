@@ -1,12 +1,10 @@
 package com.taskmanagerlogic;
 
+import com.InterAction;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.repositories.ErrorRepository;
 import com.reaction.Reaction;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import com.repositories.ErrorRepository;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
@@ -22,6 +20,7 @@ import java.util.UUID;
  * @version 1.0
  */
 @Component
+@ComponentScan(basePackages = {"com"})
 @Document(collection = "tasks")
 public class Task implements Serializable, Runnable {
 
@@ -31,11 +30,12 @@ public class Task implements Serializable, Runnable {
     private UUID id;
     private String name;
     private String describe;
+    private int size;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
     private Date targetTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
     private Date completedTime;
 
     public Reaction getReaction() {
@@ -46,8 +46,7 @@ public class Task implements Serializable, Runnable {
         this.reaction = reaction;
     }
 
-
-    private  Reaction reaction;
+    private Reaction reaction;
 
     private List<String> contacts;
 
@@ -107,10 +106,14 @@ public class Task implements Serializable, Runnable {
         return contacts;
     }
 
-    @Autowired
-    public void setErrorRepository(ErrorRepository errorRecordRepository) {
-        this.errorRecordRepository = errorRecordRepository;
+    public int getSize() {
+        return size;
     }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
 
     /**
      * Create new object with values
@@ -133,14 +136,14 @@ public class Task implements Serializable, Runnable {
     }
 
     public Task() {
+        id = UUID.randomUUID();
     }
 
     @Override
     public String toString() {
+
         String taskString = "";
-        taskString = "ID : " + id + "\nStatus : "
-                + (status == Action.COMPLETED ? "Completed" :
-                (status == Action.RUNNING ? "Running" : "Scheduled"))
+        taskString = "ID : " + id + "\nStatus : " + status.name()
                 + "\nName : " + name + "\nDescribe : " + describe + "\nTask time : " + targetTime;
 
         if (reaction != null) {
@@ -159,8 +162,10 @@ public class Task implements Serializable, Runnable {
         return taskString + '\n';
     }
 
+
     @Override
     public void run() {
+        errorRecordRepository = (ErrorRepository) InterAction.applicationContext.getBean("error_record");
         status = Action.RUNNING;
         System.out.println("You`ve got a task!!!!");
         this.setCompletedTime(new Date());
@@ -168,16 +173,17 @@ public class Task implements Serializable, Runnable {
         try {
             reaction.perform();
         } catch (Exception e) {
+            System.out.println("Еггог");
             ErrorRecord errorRecord = new ErrorRecord(
                     this.id,
-                    e.getClass(),
-                    "Some problem while" + reaction.getType().name(),
-                    e.getStackTrace(),
+                    e.getClass().getName(),
+                    "Some problem while " + reaction.getType().name(),
+                    e.getMessage(),
                     new Date()
             );
             errorRecordRepository.insert(errorRecord);
         }
-        this.setStatus(com.taskmanagerlogic.Action.COMPLETED);
+        this.setStatus(Action.COMPLETED);
     }
 
 

@@ -1,10 +1,9 @@
 package com.commands;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import com.reaction.*;
-import com.taskmanagerlogic.InterAction;
+import com.InterAction;
 import com.taskmanagerlogic.Journal;
 import com.taskmanagerlogic.Task;
 
@@ -38,8 +37,6 @@ public class Create implements Command {
 
     }
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     public Create(String[] command) {
         this.command = command;
@@ -61,7 +58,6 @@ public class Create implements Command {
      */
     @Override
     public void execute(String... args) throws ParseException, DataFormatException {
-        System.out.println(mongoTemplate);
         String name, describe;
         List<String> contacts;
         Date dateTime;
@@ -92,7 +88,6 @@ public class Create implements Command {
 
         journal.add(task);
 
-        System.out.println(journal);
         journal.schedule(journal.getLast());
     }
 

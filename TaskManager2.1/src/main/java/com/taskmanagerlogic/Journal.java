@@ -1,10 +1,12 @@
 package com.taskmanagerlogic;
 
+import com.repositories.ErrorRepository;
 import com.repositories.JournalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +20,13 @@ import java.util.UUID;
 public class Journal {
 
     private JournalRepository journalRepository;
+
+    @Autowired
+    public void setErrorRepository(ErrorRepository errorRepository) {
+        this.errorRepository = errorRepository;
+    }
+
+    private ErrorRepository errorRepository;
 
     @Autowired
     public void setJournalRepository(JournalRepository journalRepository) {
@@ -54,8 +63,9 @@ public class Journal {
     }
 
     public List<Task> findByName(String name) {
-        return journalRepository.findByName(name);
+        return journalRepository.findByNameStartingWith(name);
     }
+
 
     synchronized public void delete(Action status) {
         journalRepository.deleteByStatus(status);
@@ -64,14 +74,13 @@ public class Journal {
 
 
     synchronized public void delete(Date from, Date to) {
-        //TODO:journalRepository.deleteByPeriodOfTime(from, to);
+        journalRepository.deleteByTargetTimeBetween(from, to);
         reload();
     }
 
 
     public List<Task> findByPeriodOfTime(Date from, Date to) {
-        //TODO:return journalRepository.findByPeriodOfTime(from, to);
-        return null;
+        return journalRepository.findByTargetTimeBetween(from, to);
     }
 
     public Task findById(UUID id) {
@@ -84,6 +93,31 @@ public class Journal {
 
     public void clean() {
         journalRepository.deleteAll();
+    }
+
+    public List<Task> getTasks(String next) {
+        List<Task> result = new ArrayList<>();
+        try {
+            int page = 20 * Integer.valueOf(next);
+            List<Task> temp = journalRepository.findAll();
+            if (page <= temp.size()) {
+                for (int i = page - 20; i < page; i++) {
+                    result.add(temp.get(i));
+                }
+            } else {
+                for (int i = page - 20; i < temp.size(); i++) {
+                    result.add(temp.get(i));
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<ErrorRecord> getErrorRecords() {
+        return errorRepository.findAll();
     }
 
     public List<Task> getTasks() {
@@ -108,7 +142,7 @@ public class Journal {
             journal += task;
             journal += '\n';
         }
-        return journal + "\n}";
+        return journal + "}";
     }
 
     public void schedule(Task task) {

@@ -7,14 +7,15 @@ public class Output implements Reaction {
 
     private static final long serialVersionUID = 12321312324L;
 
-    public void setValue(String outgoing) {
-        this.value = outgoing;
+    @Override
+    public void setValue(Object outgoing) {
+        this.value = (String) outgoing;
     }
     
     private String value;
 
     public Output(String outgoing) {
-        this.value = outgoing;
+        this.value =  outgoing;
     }
 
     public Output(){}

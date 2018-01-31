@@ -22,7 +22,7 @@ import static com.commands.Command.dateFormat;
  */
 @RestController
 @RequestMapping("/tasks")
-@CrossOrigin
+@CrossOrigin//origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE}
 public class TaskController {
 
     @Autowired
@@ -53,10 +53,13 @@ public class TaskController {
         return journal.findByStatus(Action.valueOf(status.toUpperCase()));
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+
+    @RequestMapping(method = RequestMethod.GET, params = "next")
     public @ResponseBody
-    List<Task> getAllTasks() {
-        return journal.getTasks();
+    List<Task> getAllTasks(@RequestParam("next") String next) {
+        List<Task> result = journal.getTasks(next);
+        result.get(0).setSize(journal.getTasks().size());
+        return result;
     }
 
 
@@ -97,7 +100,7 @@ public class TaskController {
     @RequestMapping(value = "/error_records", method = RequestMethod.GET)
     public @ResponseBody
     List<ErrorRecord> getErrorRecords() {
-        return null;//TODO:
+        return journal.getErrorRecords();
     }
 
 
@@ -172,7 +175,6 @@ public class TaskController {
             produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public @ResponseBody
     Task putContacts(@PathVariable("id") String id, @RequestBody String contacts) {
-        System.out.println(contacts);
         String[] communications = contacts.split(",");
         Task task = journal.findById(UUID.fromString(id));
         journal.setContacts(task, Arrays.asList(communications));

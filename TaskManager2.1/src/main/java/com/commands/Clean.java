@@ -1,7 +1,6 @@
 package com.commands;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import com.taskmanagerlogic.InterAction;
+import com.InterAction;
 import com.taskmanagerlogic.Journal;
 
 import java.text.ParseException;
@@ -18,9 +17,9 @@ public class Clean implements Command {
 
     private Journal journal;
 
-
     @Override
     public void execute(String ...  args) throws ParseException, DataFormatException {
+        journal = (Journal) InterAction.applicationContext.getBean("journal");
         journal.clean();
         System.out.println("Command 'clean' executed successfully.");
     }
@@ -32,12 +31,6 @@ public class Clean implements Command {
         } catch (ParseException | DataFormatException e) {
             e.printStackTrace();
         }
-    }
-
-
-    @Autowired
-    public void setJournal(Journal journal) {
-        this.journal = journal;
     }
 
 }

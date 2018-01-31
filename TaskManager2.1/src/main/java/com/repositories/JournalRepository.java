@@ -5,6 +5,7 @@ import com.taskmanagerlogic.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,5 +23,11 @@ public interface JournalRepository extends MongoRepository<Task, UUID> {
     List<Task> findByName(String name);
 
     List<Task> findByStatus(Action status);
+
+    List<Task> findByNameStartingWith(String part);
+
+    List<Task> findByTargetTimeBetween(Date from, Date to);
+
+    void deleteByTargetTimeBetween(Date from , Date to);
 
 }

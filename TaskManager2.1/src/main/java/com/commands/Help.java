@@ -1,6 +1,6 @@
 package com.commands;
 
-import com.taskmanagerlogic.InterAction;
+import com.InterAction;
 
 import java.text.ParseException;
 import java.util.zip.DataFormatException;

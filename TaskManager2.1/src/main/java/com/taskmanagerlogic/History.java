@@ -1,5 +1,6 @@
 package com.taskmanagerlogic;
 
+import com.repositories.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,12 +20,18 @@ public class History {
 
     private Date lastCall;
 
-    public History(){
+    private Task currentTask;
+
+    public History() {
 
     }
 
+    public History(Task task) {
+        currentTask = task;
+    }
+
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private HistoryRepository historyRepository;
 
     public Date getLastCall() {
         return lastCall;
@@ -44,15 +51,16 @@ public class History {
 
 
     public void addCleanedTask(Task task) {
-        //if (countOfCleanedTask() == 20)
-        //TODO
-        mongoTemplate.insert(task);
+        if (countOfCleanedTask() == 20) {
+            historyRepository.deleteAll();
+        }
+        historyRepository.insert(new History(task));
         lastCall = new Date();
     }
 
 
     private long countOfCleanedTask() {
-        return mongoTemplate.count(new Query(), History.class);
+        return historyRepository.count();
     }
 
 }

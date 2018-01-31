@@ -10,6 +10,7 @@ public class MailSender implements Reaction {
     public MailSender() {
     }
 
+
     @Override
     public void perform() {
         throw new UnsupportedOperationException("MailSender not...");
@@ -18,6 +19,11 @@ public class MailSender implements Reaction {
     @Override
     public Object getValue() {
         return "contacts";
+    }
+
+    @Override
+    public void setValue(Object data) {
+
     }
 
     @Override

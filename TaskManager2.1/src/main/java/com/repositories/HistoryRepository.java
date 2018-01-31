@@ -1,9 +1,11 @@
 package com.repositories;
 
-import com.taskmanagerlogic.Task;
+import com.taskmanagerlogic.History;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-public interface HistoryRepository extends MongoRepository<Task, UUID> {
+@Repository
+public interface HistoryRepository extends MongoRepository<History, UUID> {
 }

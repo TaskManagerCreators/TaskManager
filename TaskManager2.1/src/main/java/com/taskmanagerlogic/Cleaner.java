@@ -1,7 +1,6 @@
 package com.taskmanagerlogic;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,7 @@ import java.util.Iterator;
  *
  * @version 2.0
  */
-//@EnableScheduling
+@EnableScheduling
 @Component
 public class Cleaner {
 
@@ -26,11 +25,11 @@ public class Cleaner {
         this.journal = journal;
     }
 
-    @Scheduled(fixedDelay = 1000 * 5000)
+    @Scheduled(fixedDelay = 5000 * 10)
     private void clean() {
-       // System.out.println(journal);
         if (!journal.getTasks().isEmpty()) {
-            for (Iterator<Task> iterator = journal.getTasks().iterator(); iterator.hasNext(); ) {
+            System.out.println("Hey - hey");
+            for (Iterator<Task> iterator = journal.getTasks().iterator(); iterator.hasNext();) {
                 Task task = iterator.next();
                 if (task != null && task.getStatus() == Action.COMPLETED) {
                     iterator.remove();

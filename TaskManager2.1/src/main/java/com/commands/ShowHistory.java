@@ -2,10 +2,9 @@ package com.commands;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 import com.taskmanagerlogic.History;
-import com.taskmanagerlogic.InterAction;
+import com.InterAction;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -18,12 +17,12 @@ import java.util.zip.DataFormatException;
  * @see InterAction - Used in interaction with ending users
  * Is multi-threaded
  */
-@ComponentScan(basePackages ={"com.taskmanagerlogic"} )
 @Component
+@ComponentScan
 public class ShowHistory implements Command {
 
-    private MongoTemplate mongoTemplate;
-
+    @Autowired
+    private History history;
 
     public ShowHistory() {
 
@@ -31,7 +30,8 @@ public class ShowHistory implements Command {
 
     @Override
     public void execute(String... command) throws ParseException, DataFormatException, IOException {
-        mongoTemplate.findAll(History.class);
+        history = (History) InterAction.applicationContext.getBean("history");
+        System.out.println(history);
     }
 
     @Override

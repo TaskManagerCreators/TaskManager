@@ -2,7 +2,6 @@ package com.taskmanagerlogic;
 
 import com.commands.Command;
 import com.commands.commandfactory.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,19 +18,21 @@ public class CommandResolver {
      * @see Journal
      */
 
-    @Autowired
-    private CommandFactory commandFactory;
-
-    private static final Map<String, String[]> keeper = new HashMap<String, String[]>() {{
-        put("create", new String[]{"commandPart", "journal"});
-        put("help", null);
+    private final static Map<String, CommandFactory> keeper = new HashMap<String, CommandFactory>() {{
+        put("create", new CreateFactory());
+        put("help", new HelpFactory());
+        put("delete", new DeleteFactory());
+        put("show", new ShowFactory());
+        put("exit", new ExitFactory());
+        put("history", new ShowHistoryFactory());
+        put("clean", new CleanFactory());
 
     }};
+
 
     /**
      * Creates one of several com.commands.
      *
-     * @param commandPart
      * @return Object that implements Command.
      * @see Command
      */
@@ -43,23 +44,12 @@ public class CommandResolver {
         if (commandPart.length > 1)
             commandPart[0] = commandPart[0].substring(key.length() + 1, commandPart[0].length());
 
-        switch (key) {
-            case "create":
-                return new CreateFactory().produceCommand(commandPart);
-            case "show":
-                return new ShowFactory().produceCommand(commandPart);
-            case "delete":
-                return new DeleteFactory().produceCommand(commandPart);
-            case "clean":
-                return new CleanFactory().produceCommand(commandPart);
-            case "help":
-                return new HelpFactory().produceCommand();
-            case "history":
-                return new ShowHistoryFactory().produceCommand(commandPart);
-            case "exit":
-                return new ExitFactory().produceCommand();
-            default:
-                throw new IllegalArgumentException("Do not recognized command key.");
-        }
+
+        CommandFactory factory = new CommandResolver().keeper.get(key);
+
+        if (factory == null)
+            throw new IllegalArgumentException("Do not recognized command key.");
+
+        return factory.produceCommand(commandPart);
     }
 }

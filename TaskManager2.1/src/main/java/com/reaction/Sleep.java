@@ -7,8 +7,8 @@ public class Sleep implements Reaction {
 
     private static final long serialVersionUID = 12321312324L;
 
-    public void setMillis(long millis) {
-        this.millis = millis;
+    public void setValue(Object millis) {
+        this.millis =  Long.valueOf(String.valueOf(millis));
     }
 
     private long millis;
@@ -16,7 +16,6 @@ public class Sleep implements Reaction {
     public Sleep(){}
 
     public Sleep(long millis) {
-        System.out.println(millis);
         this.millis = millis;
     }
 
