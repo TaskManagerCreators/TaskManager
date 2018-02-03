@@ -1,0 +1,17 @@
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 300px;
+}
+
+.datepicker {
+  position:relative;
+  bottom : 300px;
+  left : 700px;
+}
