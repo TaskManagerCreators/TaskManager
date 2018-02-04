@@ -1,0 +1,20 @@
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 300px;
+
+}
+
+.datepicker {
+  padding-left: 55%;
+}
+.taskTable{
+  width: 50%;
+  float: left;
+}
