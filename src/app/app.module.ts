@@ -5,6 +5,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {SelectionModel} from '@angular/cdk/collections';
 import {
   MatFormFieldModule,
   MatAutocompleteModule,
@@ -75,9 +78,11 @@ import { ViewComponentComponent , DialogOverviewExampleDialog } from './view-com
     MatTableModule,
     MatToolbarModule,
     MatIconModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
   ],
   entryComponents: [ViewComponentComponent ,  DialogOverviewExampleDialog],
-  providers: [],
+  providers: [HttpServiceComponent],
   bootstrap: [AppComponent ],
 })
 export class AppModule { }

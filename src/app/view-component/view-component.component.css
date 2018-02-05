@@ -2,16 +2,20 @@
 .example-container {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 800px;
 }
 
 .mat-table {
   overflow: auto;
-  max-height: 300px;
+  max-height: 400px;
+}
+
+.mat-column-delete {
+  overflow: visible;
 }
 
 .datepicker {
-  position:relative;
-  bottom : 300px;
-  left : 700px;
+  position: absolute;
+  top : 50px;
+  right  : 100px;
 }
