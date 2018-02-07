@@ -4,12 +4,15 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatCheckboxModule } from '@an
 import { HttpServiceComponent } from 'app/http-service/http-service.component';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { UUID } from 'angular2-uuid';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
+
 
 
 import * as _moment from 'moment';
@@ -52,7 +55,7 @@ export class ViewComponentComponent implements OnInit {
 
   ];
 
-  data: Object;
+  //data: Object;
   event: string;
   count = 0;
   displayedColumns = ['name', 'describe', 'targetTime', 'reaction', 'contacts', 'status', 'delete'];
@@ -63,40 +66,43 @@ export class ViewComponentComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog, private httpService: HttpServiceComponent, private snackBar: MatSnackBar) { }
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, private http: HttpClient) { }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
-    this.httpService.getTasks();
-    this.data = this.httpService.data;
     this.ELEMENT_DATA = [];
-    alert(this.data);
-    JSON.parse(JSON.stringify(this.data)).forEach(item => {
-      this.ELEMENT_DATA.push({
-        id: item.id,
-        name: item.name,
-        describe: item.describe,
-        targetTime: item.targetTime,
-        reaction: JSON.parse(JSON.stringify(item.reaction)).type,
-        contacts: item.contacts,
-        status: item.status
+    this.http.get('http://localhost:8080/tasks').subscribe(data => {
+      Object.values(data).forEach(item => {
+        this.ELEMENT_DATA.push({
+          id: item.id,
+          name: item.name,
+          describe: item.describe,
+          targetTime: item.targetTime,
+          reaction: item.reaction.type,
+          contacts: item.contacts,
+          status: item.status
+        });
       });
+      this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
+      this.ngAfterViewInit();
     });
-    this.dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
-    this.ngAfterViewInit();
   }
 
   deleteRow(row) {
     var index = this.dataSource.data.indexOf(row);
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
-    // REVIEW: request
+    this.http.delete('http://localhost:8080/tasks/' + row.id).subscribe(data =>{
+
+    });
     this.openSnackBar('Id of deleted task : ' + row.id, 'OK');
   }
 
   deleteAll() {
     this.dataSource.data = [];
     this.dataSource._updateChangeSubscription();
-    // REVIEW: request
+    this.http.get('http://localhost:8080/tasks/*').subscribe(data => {
+
+    });
     this.openSnackBar('All tasks deleted.', 'OK');
   }
 
@@ -108,8 +114,7 @@ export class ViewComponentComponent implements OnInit {
 
   openDialog(): void {
     let dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      height: '400px',
-      width: '600px',
+
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -119,6 +124,7 @@ export class ViewComponentComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
+
 
   ngOnInit() {
   }
@@ -154,15 +160,42 @@ export class DialogOverviewExampleDialog {
   num: number;
 
   types = [
-    { value: 'sender-0', viewValue: 'MailSender' },
-    { value: 'output-1', viewValue: 'Output' },
-    { value: 'sleep-2', viewValue: 'Sleep' }
+    { value: 'SENDER', viewValue: 'MailSender' },
+    { value: 'OUTPUT', viewValue: 'Output' },
+    { value: 'SLEEP', viewValue: 'Sleep' }
   ];
 
 
-  constructor(
+  constructor(private http: HttpClient,
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  postData(name : string , describe : string , date : string , time : string , type : string , value : string , contacts : string) {
+    let uuid = UUID.UUID();
+    return this.http.post(
+      'http://localhost:8080/tasks',
+      JSON.stringify({
+        id: uuid,
+        name: name,
+        describe: describe,
+        targetTime: +new Date(date + ' ' + time),
+        reaction: {
+          type: type,
+          value: value
+        },
+        contacts: contacts.split(','),
+        status: 'SCHEDULED'
+      })
+      , {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Origin': '*'
+        }),
+        observe: 'response'
+      }).subscribe(data => alert(JSON.stringify(data)));
   }
 
   onNoClick(): void {

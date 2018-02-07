@@ -17,7 +17,7 @@ export class HttpServiceComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   getTasks() {
-    return this.http.get('http://localhost:8080/tasks').subscribe(data => this.data = data);
+    return this.http.get('http://localhost:8080/tasks');
     //alert('data' + this.data);
   }
 

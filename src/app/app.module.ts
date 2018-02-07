@@ -8,6 +8,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {SelectionModel} from '@angular/cdk/collections';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+
 import {
   MatFormFieldModule,
   MatAutocompleteModule,
@@ -80,6 +82,8 @@ import { ViewComponentComponent , DialogOverviewExampleDialog } from './view-com
     MatIconModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   entryComponents: [ViewComponentComponent ,  DialogOverviewExampleDialog],
   providers: [HttpServiceComponent],
