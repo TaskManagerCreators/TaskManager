@@ -1,0 +1,21 @@
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 400px;
+}
+
+.mat-column-delete {
+  overflow: visible;
+}
+
+.datepicker {
+  position: absolute;
+  top : 50px;
+  right  : 100px;
+}

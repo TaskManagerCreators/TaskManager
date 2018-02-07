@@ -1,0 +1,9 @@
+<div>
+  <button mat-button (click) = "back()">
+      <mat-icon class="example-icon"><i class="material-icons">keyboard_arrow_left</i></mat-icon>
+  </button>
+  <button mat-button (click) = "next()">
+      <mat-icon class="example-icon"><i class="material-icons">keyboard_arrow_right</i></mat-icon>
+  </button>
+  <label *ngIf="size!=0">Page {{page}} of {{size}}</label>
+</div>
