@@ -4,10 +4,19 @@
     <button  mat-icon-button (click)="openDialog()">
        <mat-icon class="example-icon">add</mat-icon>
     </button>
+    <button mat-icon-button (click) = "startSearch()">
+      <mat-icon class="example-icon">search</mat-icon>
+    </button>
+      <mat-form-field class="picker">
+        <input matInput [min]="minDate" [matDatepicker]="picker" [value]="startDate.value" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-card>
   <div class="example-container mat-elevation-z8">
+
     <mat-table #table [dataSource]="dataSource">
 
       <ng-container matColumnDef="name">
@@ -57,14 +66,6 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
 
-    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
-  </div>
-  <div class="datepicker">
-    <mat-form-field>
-      <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date" [value]="startDate.value" (dateChange)="onDateChange($event)">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+  <app-paginator [page] = "page" [pages] = "pages"></app-paginator>
   </div>
 </mat-card>

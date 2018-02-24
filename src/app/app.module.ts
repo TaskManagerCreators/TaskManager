@@ -9,7 +9,8 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
-
+import React from 'react';
+import TimePicker from 'material-ui/TimePicker';
 import {
   MatFormFieldModule,
   MatAutocompleteModule,
@@ -50,15 +51,16 @@ import {CdkTableModule} from '@angular/cdk/table';
 import 'hammerjs';
 
 import { HttpClientModule }   from '@angular/common/http';
-import { HttpServiceComponent} from './http-service/http-service.component';
-import { ViewComponentComponent , DialogOverviewExampleDialog } from './view-component/view-component.component';
+import { ViewComponentComponent , DialogOverviewExampleDialog , DialogSearchExampleDialog} from './view-component/view-component.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HttpServiceComponent,
     ViewComponentComponent,
     DialogOverviewExampleDialog,
+    PaginatorComponent,
+    DialogSearchExampleDialog,
   ],
   imports: [
     MatSelectModule,
@@ -85,8 +87,8 @@ import { ViewComponentComponent , DialogOverviewExampleDialog } from './view-com
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],
-  entryComponents: [ViewComponentComponent ,  DialogOverviewExampleDialog],
-  providers: [HttpServiceComponent],
+  entryComponents: [ViewComponentComponent ,  DialogOverviewExampleDialog , DialogSearchExampleDialog],
+  providers: [],
   bootstrap: [AppComponent ],
 })
 export class AppModule { }
