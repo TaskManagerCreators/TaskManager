@@ -59,6 +59,7 @@ public class History {
     }
 
 
+
     private long countOfCleanedTask() {
         return historyRepository.count();
     }

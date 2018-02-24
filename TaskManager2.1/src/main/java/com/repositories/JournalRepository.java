@@ -2,6 +2,8 @@ package com.repositories;
 
 import com.taskmanagerlogic.Action;
 import com.taskmanagerlogic.Task;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +18,6 @@ public interface JournalRepository extends MongoRepository<Task, UUID> {
 
     void deleteByStatus(Action status);
 
-    /*void deleteByPeriodOfTime(Date from, Date to);
-
-    List<Task> findByPeriodOfTime(Date from, Date to);*/
-
     List<Task> findByName(String name);
 
     List<Task> findByStatus(Action status);
@@ -29,5 +27,9 @@ public interface JournalRepository extends MongoRepository<Task, UUID> {
     List<Task> findByTargetTimeBetween(Date from, Date to);
 
     void deleteByTargetTimeBetween(Date from , Date to);
+
+    Page findByTargetTimeBetween(Pageable pageable , Date from, Date to);
+
+    Page findByNameStartingWith(Pageable pageable , String part);
 
 }

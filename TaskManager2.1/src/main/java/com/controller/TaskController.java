@@ -7,10 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.taskmanagerlogic.*;
 
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.Instant;
+import java.util.*;
 
 import static com.commands.Command.dateFormat;
 
@@ -22,8 +20,11 @@ import static com.commands.Command.dateFormat;
  */
 @RestController
 @RequestMapping("/tasks")
-@CrossOrigin//origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE}
+@CrossOrigin
 public class TaskController {
+
+    @Autowired
+    private TaskResponse response;
 
     @Autowired
     private Journal journal;
@@ -42,6 +43,16 @@ public class TaskController {
         return journal.findByName(name);
     }
 
+
+    @RequestMapping(method = RequestMethod.GET, params = {"name", "page", "size"})
+    public @ResponseBody
+    TaskResponse getByName(@RequestParam("name") String name, @RequestParam("page") int page, @RequestParam("size") int size) {
+        List<Task> tasks = journal.findByName(name, page, size);
+        response.setSize(tasks.size());
+        response.setTasks(tasks);
+        return response;
+    }
+
     /**
      * GET method for represent by status
      *
@@ -54,12 +65,19 @@ public class TaskController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET, params = "next")
+    @RequestMapping(method = RequestMethod.GET, params = {"page", "size"})
     public @ResponseBody
-    List<Task> getAllTasks(@RequestParam("next") String next) {
-        List<Task> result = journal.getTasks(next);
-        result.get(0).setSize(journal.getTasks().size());
-        return result;
+    TaskResponse getAllTasks(@RequestParam("page") int page, @RequestParam("size") int size) {
+        List<Task> tasks = journal.getTasks(page, size);
+        response.setTasks(tasks);
+        response.setSize(tasks.size());
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody
+    List<Task> getTasks() {
+        return journal.getTasks();
     }
 
 
@@ -73,9 +91,20 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.GET, params = {"from", "to"})
     public @ResponseBody
     List<Task> getTasksByPeriodOfTime(@RequestParam("from") String from, @RequestParam("to") String to) throws ParseException {
-        Date fromDate = dateFormat.parse(from);
-        Date toDate = dateFormat.parse(to);
+        Date fromDate = Date.from(Instant.ofEpochMilli(Long.valueOf(from)));
+        Date toDate = Date.from(Instant.ofEpochMilli(Long.valueOf(to)));
         return journal.findByPeriodOfTime(fromDate, toDate);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = {"from", "to", "page", "size"})
+    public @ResponseBody
+    TaskResponse getByPeriodOfTime(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("page") int page, @RequestParam("size") int size) throws ParseException {
+        Date fromDate = Date.from(Instant.ofEpochMilli(Long.valueOf(from)));
+        Date toDate = Date.from(Instant.ofEpochMilli(Long.valueOf(to)));
+        List<Task> tasks = journal.findByPeriodOfTime(fromDate, toDate, page, size);
+        response.setTasks(tasks);
+        response.setSize(tasks.size());
+        return response;
     }
 
     /**
@@ -92,14 +121,15 @@ public class TaskController {
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public @ResponseBody
-    String getHistory() {
-        return history.toString();
+    History getHistory() {
+        return history;
     }
 
 
     @RequestMapping(value = "/error_records", method = RequestMethod.GET)
     public @ResponseBody
     List<ErrorRecord> getErrorRecords() {
+        System.out.println(journal.getErrorRecords());
         return journal.getErrorRecords();
     }
 
@@ -125,8 +155,8 @@ public class TaskController {
      *
      * @param id
      */
-    @RequestMapping(method = RequestMethod.DELETE, params = "id")
-    public void deleteById(@RequestParam(value = "id") String id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteById(@PathVariable("id") String id) {
         journal.delete(UUID.fromString(id));
     }
 
@@ -162,8 +192,11 @@ public class TaskController {
      * @return Task
      * @throws ParseException
      */
-    @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
+            )
     public @ResponseBody
     Task addTasks(@RequestBody Task task) throws ParseException {
         journal.add(task);

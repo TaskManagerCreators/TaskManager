@@ -8,7 +8,7 @@ public class ReactionResolver {
     private Map<String, Reaction> keeper = new HashMap<String, Reaction>() {{
         put("sleep", new Sleep());
         put("output", new Output());
-        put("send", new MailSender());
+        put("sender", new MailSender());
 
     }};
 

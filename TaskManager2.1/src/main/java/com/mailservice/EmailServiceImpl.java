@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("emailService")
 @ComponentScan(basePackageClasses = MailSenderConfiguration.class)
 public class EmailServiceImpl implements EmailService {
 

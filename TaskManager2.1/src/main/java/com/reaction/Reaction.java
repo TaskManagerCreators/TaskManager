@@ -2,6 +2,7 @@ package com.reaction;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.taskmanagerlogic.Task;
 
 import java.io.Serializable;
 
@@ -14,7 +15,8 @@ import java.io.Serializable;
 })
 public interface Reaction extends Serializable {
 
-    void perform();
+
+    void perform(Task task);
 
     Object getValue();
 

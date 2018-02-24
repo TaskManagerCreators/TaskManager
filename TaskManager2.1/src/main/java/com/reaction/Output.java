@@ -1,6 +1,7 @@
 package com.reaction;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.taskmanagerlogic.Task;
 
 @JsonDeserialize(as = Output.class)
 public class Output implements Reaction {
@@ -21,9 +22,10 @@ public class Output implements Reaction {
     public Output(){}
 
     @Override
-    public void perform() {
-        System.out.println(value);
+    public void perform(Task task) {
+        System.out.println(task.getReaction().getValue());
     }
+
 
     @Override
     public Object getValue() {

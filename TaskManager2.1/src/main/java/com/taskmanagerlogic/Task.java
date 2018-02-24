@@ -4,6 +4,8 @@ import com.InterAction;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.reaction.Reaction;
 import com.repositories.ErrorRepository;
+import com.repositories.JournalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,12 +32,12 @@ public class Task implements Serializable, Runnable {
     private UUID id;
     private String name;
     private String describe;
-    private int size;
+    private UUID userId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
     private Date targetTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
     private Date completedTime;
 
     public Reaction getReaction() {
@@ -51,6 +53,8 @@ public class Task implements Serializable, Runnable {
     private List<String> contacts;
 
     private ErrorRepository errorRecordRepository;
+
+    private Journal journal;
 
     public UUID getId() {
         return id;
@@ -106,12 +110,8 @@ public class Task implements Serializable, Runnable {
         return contacts;
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
+    public UUID getUser() {
+        return userId;
     }
 
 
@@ -125,8 +125,19 @@ public class Task implements Serializable, Runnable {
      * @param contacts
      * @see Reaction
      */
+    public Task(String name, String describe, Date dateTime, Reaction reaction, List<String> contacts, UUID userId) {
+        this.status = Action.SCHEDULED;
+        this.name = name;
+        this.describe = describe;
+        this.targetTime = dateTime;
+        this.reaction = reaction;
+        this.contacts = contacts;
+        this.userId = userId;
+        id = UUID.randomUUID();
+    }
+
     public Task(String name, String describe, Date dateTime, Reaction reaction, List<String> contacts) {
-        status = Action.SCHEDULED;
+        this.status = Action.SCHEDULED;
         this.name = name;
         this.describe = describe;
         this.targetTime = dateTime;
@@ -166,14 +177,15 @@ public class Task implements Serializable, Runnable {
     @Override
     public void run() {
         errorRecordRepository = (ErrorRepository) InterAction.applicationContext.getBean("error_record");
-        status = Action.RUNNING;
+        journal = (Journal) InterAction.applicationContext.getBean("journal");
+        journal.updateStatus(this.id, Action.RUNNING);
         System.out.println("You`ve got a task!!!!");
         this.setCompletedTime(new Date());
         System.out.println("Name : " + this.getName() + "\nDescribe : " + this.getDescribe() + "\nComplete at " + this.getCompletedTime());
         try {
-            reaction.perform();
+            reaction.perform(this);
         } catch (Exception e) {
-            System.out.println("Еггог");
+            System.out.println("ERROR while perform");
             ErrorRecord errorRecord = new ErrorRecord(
                     this.id,
                     e.getClass().getName(),
@@ -183,7 +195,7 @@ public class Task implements Serializable, Runnable {
             );
             errorRecordRepository.insert(errorRecord);
         }
-        this.setStatus(Action.COMPLETED);
+        journal.updateStatus(this.id, Action.COMPLETED);
     }
 
 

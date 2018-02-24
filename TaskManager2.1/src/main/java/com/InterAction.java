@@ -1,6 +1,7 @@
 package com;
 
 import com.commands.Command;
+import com.mailservice.EmailService;
 import com.mailservice.EmailServiceImpl;
 import com.taskmanagerlogic.Cleaner;
 import com.taskmanagerlogic.CommandResolver;
@@ -30,10 +31,6 @@ public class InterAction {
     private Cleaner cleaner;
 
     private Command command;
-
-
-    @Autowired
-    private EmailServiceImpl emailService;
 
     public static ApplicationContext applicationContext;
 
@@ -70,10 +67,7 @@ public class InterAction {
         executor.initialize();
 
         System.out.println("Hey , i'm your task manager right now.");
-
-        emailService.sendSimpleMessage("archac3@gmail.com" , "Hey" , "Hey");
-
-        //create task , desc , 12:48 31.01.2018 , output - 1000 , Jelly , KAte
+        //create task , desc , 00:07 21.02.2018 , sender - 1000 , archac3@gmail.com
         while (true) {
             in = input.readLine().trim();
             commandPart = in.split(",");

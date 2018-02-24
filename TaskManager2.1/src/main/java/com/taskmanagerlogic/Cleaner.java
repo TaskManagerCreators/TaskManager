@@ -1,6 +1,8 @@
 package com.taskmanagerlogic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,17 +20,17 @@ public class Cleaner {
 
     private Journal journal;
 
-    private History history = new History();
+    private History history ;
 
     @Autowired
-    public Cleaner(Journal journal) {
+    public Cleaner(Journal journal , History history) {
         this.journal = journal;
+        this.history = history;
     }
 
-    @Scheduled(fixedDelay = 5000 * 10)
+    @Scheduled(fixedDelay = 5000 )
     private void clean() {
         if (!journal.getTasks().isEmpty()) {
-            System.out.println("Hey - hey");
             for (Iterator<Task> iterator = journal.getTasks().iterator(); iterator.hasNext();) {
                 Task task = iterator.next();
                 if (task != null && task.getStatus() == Action.COMPLETED) {
