@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 /**
  * This class describes a user.
  * @version 1.0
@@ -22,7 +24,8 @@ public class User {
         this.email = email;
         this.description = description;
     }
-    public User(){}
+    public User(){
+    }
 
     public String getName() {
         return name;

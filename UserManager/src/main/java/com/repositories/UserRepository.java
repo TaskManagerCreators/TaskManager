@@ -14,4 +14,5 @@ import java.util.List;
 public interface UserRepository extends MongoRepository<User, String> {
     List<User> getUsersByName(String name);
     List<User> getUsersByDescription(String description);
+    void deleteUsersByName(String name);
 }

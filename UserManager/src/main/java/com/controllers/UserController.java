@@ -62,4 +62,10 @@ public class UserController {
     public List<User> getUsersByDiscription(String description){
         return userRepository.getUsersByDescription(description);
     }
+    synchronized public void deleteUserByEmail(String email){
+        userRepository.delete(email);
+    }
+    synchronized public void deleteByName(String name){
+        userRepository.deleteUsersByName(name);
+    }
 }

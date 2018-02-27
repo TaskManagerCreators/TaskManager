@@ -2,9 +2,19 @@ package com.controllers;
 
 import com.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.OkHttpClientHttpRequestFactory;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -69,5 +79,32 @@ public class UserRestController {
     User addUser(@RequestBody User user) throws ParseException{
         userController.addUser(user);
         return user;
+    }
+    @RequestMapping(method = RequestMethod.DELETE , params = "email")
+    public void deleteByEmail(@RequestParam(value = "email") String email){
+       try{
+           OkHttpClientHttpRequestFactory factory = new OkHttpClientHttpRequestFactory();
+           ClientHttpRequest request = factory.createRequest(new URI("http://localhost:8080/tasks?email="+email) , HttpMethod.DELETE);
+           ClientHttpResponse response = request.execute();
+           if(response.getStatusCode().is2xxSuccessful()) {
+               userController.deleteUserByEmail(email);
+           }
+       } catch (URISyntaxException | IOException e) {
+           e.printStackTrace();
+       }
+
+    }
+    @RequestMapping(method = RequestMethod.DELETE , params = "name")
+    public void deleteByName(@RequestParam(value = "name") String name){
+        try{
+            OkHttpClientHttpRequestFactory factory = new OkHttpClientHttpRequestFactory();
+            ClientHttpRequest request = factory.createRequest(new URI("http://localhost:8080/tasks?name="+name) , HttpMethod.DELETE);
+            ClientHttpResponse response = request.execute();
+            if(response.getStatusCode().is2xxSuccessful()) {
+                userController.deleteUserByEmail(name);
+            }
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
     }
 }
