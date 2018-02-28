@@ -1,13 +1,18 @@
 
+.picker{
+  position: absolute;
+  right: 30px;
+  top : 10px;
+}
 .example-container {
   display: flex;
   flex-direction: column;
-  max-width: 800px;
+  max-width: 100%;
 }
 
 .mat-table {
   overflow: auto;
-  max-height: 400px;
+  max-height: 600px;
 }
 
 .mat-column-delete {

@@ -9,7 +9,7 @@
       <textarea matInput #desc placeholder="Describe" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
     </mat-form-field>
   </div>
-  <div>
+  <div class = "time_picker">
     <mat-form-field>
       <input matInput #date [matDatepicker]="picker1" placeholder="Date" required>
       <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -18,13 +18,13 @@
   </div>
   <div>
     <mat-form-field>
-    <input matInput #time [owlDateTimeTrigger]="dt" [owlDateTime]="dt" placeholder="Time">
-    <owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
-  </mat-form-field>
+      <input matInput #time [owlDateTimeTrigger]="dt" [owlDateTime]="dt" placeholder="Time">
+      <owl-date-time [pickerType]="'timer'" #dt></owl-date-time>
+    </mat-form-field>
   </div>
   <div>
     <mat-form-field>
-      <mat-select  #type placeholder="Reaction type">
+      <mat-select #type placeholder="Reaction type">
         <mat-option *ngFor="let type of types" [value]="type.value">
           {{ type.viewValue }}
         </mat-option>
@@ -38,17 +38,20 @@
   </div>
   <div>
     <mat-form-field>
-      <textarea matInput  #contacts placeholder="Contacts" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+      <textarea matInput #contacts placeholder="Contacts" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
     </mat-form-field>
   </div>
-  <!--{{name.value}}
-  {{desc.value}}
-  {{date.value}}
-  {{reaction.value}}
-  {{contacts.value}}
-  {{type.value}}-->
   <div>
-    <button mat-icon-button (click) = "postData(name.value , desc.value , date.value , time.value ,  type.value , reaction.value , contacts.value)" >
+    <div>
+      <mat-form-field>
+        <mat-select #user placeholder="User">
+          <mat-option *ngFor="let user of users" [value]="user">
+            {{ user.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+    <button mat-icon-button (click)="postData(name.value , desc.value , date.value , time.value ,  type.value , reaction.value , contacts.value , user.value)">
      <mat-icon class="example-icon">add</mat-icon>
   </button>
   </div>

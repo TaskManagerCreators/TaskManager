@@ -49,18 +49,16 @@ import {CdkTableModule} from '@angular/cdk/table';
 import 'hammerjs';
 
 import { HttpClientModule }   from '@angular/common/http';
-import { HttpServiceComponent} from './http-service/http-service.component';
-import { ViewComponentComponent , DialogOverviewExampleDialog , DialogSearchExampleDialog } from './view-component/view-component.component';
+import { ViewComponentComponent , DialogOverviewExampleDialog , DialogSearchExampleDialog} from './view-component/view-component.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HttpServiceComponent,
     ViewComponentComponent,
     DialogOverviewExampleDialog,
-    DialogSearchExampleDialog,
     PaginatorComponent,
+    DialogSearchExampleDialog,
   ],
   imports: [
     MatSelectModule,
@@ -87,8 +85,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
   ],
-  entryComponents: [ViewComponentComponent , DialogOverviewExampleDialog , DialogSearchExampleDialog],
-  providers: [HttpServiceComponent],
+  entryComponents: [ViewComponentComponent ,  DialogOverviewExampleDialog , DialogSearchExampleDialog],
+  providers: [],
   bootstrap: [AppComponent ],
 })
 export class AppModule { }
