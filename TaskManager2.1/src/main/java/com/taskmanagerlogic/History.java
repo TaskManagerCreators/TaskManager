@@ -18,31 +18,44 @@ import java.util.Date;
 @Document(collection = "history")
 public class History {
 
-    private Date lastCall;
+    private Date eventDate;
+
+    public Date getEventDate() {
+        return eventDate;
+    }
+
+    public Task getCurrentTask() {
+        return currentTask;
+    }
+
+    public String getEvent() {
+        return event;
+    }
 
     private Task currentTask;
+
+    private String event;
 
     public History() {
 
     }
 
-    public History(Task task) {
-        currentTask = task;
+    public History(Task task, String operation, Date eventDate) {
+        this.event = operation;
+        this.eventDate = eventDate;
+        this.currentTask = task;
     }
 
     @Autowired
     private HistoryRepository historyRepository;
 
-    public Date getLastCall() {
-        return lastCall;
-    }
 
     @Override
     public String toString() {
         String result;
         result = "Count of deleted tasks : " + countOfCleanedTask();
-        if (lastCall != null)
-            result += "\nLast call : " + lastCall;
+        if (event != null)
+            result += "\nLast call : " + event;
         else
             result += "\nLast call : unknown";
 
@@ -54,10 +67,12 @@ public class History {
         if (countOfCleanedTask() == 20) {
             historyRepository.deleteAll();
         }
-        historyRepository.insert(new History(task));
-        lastCall = new Date();
-    }
+        this.eventDate = new Date();
+        this.event = "clean";
+        this.currentTask = task;
+        historyRepository.insert(new History(this.currentTask, this.event, this.eventDate));
 
+    }
 
 
     private long countOfCleanedTask() {

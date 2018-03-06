@@ -15,9 +15,29 @@ import java.util.UUID;
  * @version 1.1
  */
 
-@ComponentScan(basePackages = {"com.repositories" , "com.configuration" })
+@ComponentScan(basePackages = {"com.repositories", "com.configuration"})
 @Document(collection = "error_record")
 public class ErrorRecord {
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getExceptionClass() {
+        return exceptionClass;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public String getStackTrace() {
+        return stackTrace;
+    }
+
+    public Date getDate() {
+        return date;
+    }
 
     private UUID id;
     private String exceptionClass;

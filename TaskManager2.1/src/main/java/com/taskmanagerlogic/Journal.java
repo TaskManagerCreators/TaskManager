@@ -1,6 +1,7 @@
 package com.taskmanagerlogic;
 
 import com.repositories.ErrorRepository;
+import com.repositories.HistoryRepository;
 import com.repositories.JournalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,14 @@ public class Journal {
     private JournalRepository journalRepository;
 
     @Autowired
+    public void setHistoryRepository(HistoryRepository historyRepository) {
+        this.historyRepository = historyRepository;
+    }
+
+    private HistoryRepository historyRepository;
+
+
+    @Autowired
     public void setErrorRepository(ErrorRepository errorRepository) {
         this.errorRepository = errorRepository;
     }
@@ -37,6 +47,7 @@ public class Journal {
     }
 
     private ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+    private ThreadPoolTaskScheduler notificationScheduler = new ThreadPoolTaskScheduler();
 
     private Task laterAddedTask;
 
@@ -47,6 +58,8 @@ public class Journal {
 
     public Journal() {
         scheduler.setPoolSize(100);
+        notificationScheduler.setPoolSize(100);
+        notificationScheduler.initialize();
         scheduler.initialize();
     }
 
@@ -70,12 +83,12 @@ public class Journal {
     }
 
     public List<Task> findByName(String name, int page, int size) {
-        return journalRepository.findByNameStartingWith(new PageRequest(page - 1, size), name).getContent();
+        return journalRepository.findByNameStartingWith(new PageRequest(page - 1, size), name);
     }
 
 
     public List<Task> findByPeriodOfTime(Date from, Date to, int page, int size) {
-        return journalRepository.findByTargetTimeBetween(new PageRequest(page - 1, size), from, to).getContent();
+        return journalRepository.findByTargetTimeBetween(new PageRequest(page - 1, size), from, to);
     }
 
     public List<Task> findByPeriodOfTime(Date from, Date to) {
@@ -113,6 +126,10 @@ public class Journal {
 
     public List<ErrorRecord> getErrorRecords() {
         return errorRepository.findAll();
+    }
+
+    public List<History> getHistory() {
+        return historyRepository.findAll();
     }
 
     public List<Task> getTasks() {
@@ -160,6 +177,12 @@ public class Journal {
                 scheduler.schedule(t, t.getTargetTime());
             }
         }
+    }
+
+    public void scheduleNotification(Notification notification) {
+        notificationScheduler.schedule(notification,
+                Date.from(Instant.ofEpochMilli(notification.getPresentlyTask().getTargetTime().getTime()
+                        - notification.getPresentlyTask().getNotificationInterval())));
     }
 
     public void reload() {

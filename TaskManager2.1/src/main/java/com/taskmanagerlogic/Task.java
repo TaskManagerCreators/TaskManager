@@ -32,7 +32,25 @@ public class Task implements Serializable, Runnable {
     private UUID id;
     private String name;
     private String describe;
-    private UUID userId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public long getNotificationInterval() {
+        return notificationInterval;
+    }
+
+    public void setNotificationInterval(long notificationInterval) {
+        this.notificationInterval = notificationInterval;
+    }
+
+    private String email;
+    private long notificationInterval;
 
     //@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm dd.MM.yyyy")
     private Date targetTime;
@@ -110,10 +128,6 @@ public class Task implements Serializable, Runnable {
         return contacts;
     }
 
-    public UUID getUser() {
-        return userId;
-    }
-
 
     /**
      * Create new object with values
@@ -132,7 +146,7 @@ public class Task implements Serializable, Runnable {
         this.targetTime = dateTime;
         this.reaction = reaction;
         this.contacts = contacts;
-        this.userId = userId;
+        //this.userId = userId;
         id = UUID.randomUUID();
     }
 

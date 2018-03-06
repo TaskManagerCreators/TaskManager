@@ -32,6 +32,9 @@ public class TaskController {
     @Autowired
     private History history;
 
+    @Autowired
+    private Notification notification;
+
     /**
      * GET method for represent by name
      *
@@ -48,6 +51,7 @@ public class TaskController {
     public @ResponseBody
     TaskResponse getByName(@RequestParam("name") String name, @RequestParam("page") int page, @RequestParam("size") int size) {
         List<Task> tasks = journal.findByName(name, page, size);
+        System.out.println(tasks.size());
         response.setSize(tasks.size());
         response.setTasks(tasks);
         return response;
@@ -98,7 +102,7 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, params = {"from", "to", "page", "size"})
     public @ResponseBody
-    TaskResponse getByPeriodOfTime(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("page") int page, @RequestParam("size") int size) throws ParseException {
+    TaskResponse getByPeriodOfTime(@RequestParam("from") String from, @RequestParam("to") String to, @RequestParam("page") int page, @RequestParam("size") int size) {
         Date fromDate = Date.from(Instant.ofEpochMilli(Long.valueOf(from)));
         Date toDate = Date.from(Instant.ofEpochMilli(Long.valueOf(to)));
         List<Task> tasks = journal.findByPeriodOfTime(fromDate, toDate, page, size);
@@ -121,8 +125,8 @@ public class TaskController {
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public @ResponseBody
-    History getHistory() {
-        return history;
+    List<History> getHistory() {
+        return journal.getHistory();
     }
 
 
@@ -196,11 +200,13 @@ public class TaskController {
             method = RequestMethod.POST,
             consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE}
-            )
+    )
     public @ResponseBody
     Task addTasks(@RequestBody Task task) throws ParseException {
         journal.add(task);
         journal.schedule(task);
+        notification.setPresentlyTask(task);
+        journal.scheduleNotification(notification);
         return task;
     }
 

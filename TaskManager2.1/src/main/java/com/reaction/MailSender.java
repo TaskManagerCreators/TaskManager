@@ -20,7 +20,7 @@ public class MailSender implements Reaction {
     @Override
     public void perform(Task task) {
         emailService = (EmailService) InterAction.applicationContext.getBean("emailService");
-            emailService.sendSimpleMessage(task.getContacts().get(0).trim()/*task.getUser().getEmail().trim()*/, task.getDescribe() , task.getReaction().getValue().toString());
+            emailService.sendSimpleMessage(task.getEmail()/*task.getUser().getEmail().trim()*/, task.getDescribe() , task.getDescribe());
 
     }
 

@@ -11,11 +11,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.Instant;
+import java.util.Date;
 
 /**
  * Interacts with ending users
@@ -67,8 +70,8 @@ public class InterAction {
         executor.initialize();
 
         System.out.println("Hey , i'm your task manager right now.");
-        //create task , desc , 00:07 21.02.2018 , sender - 1000 , archac3@gmail.com
-        while (true) {
+        //create task , desc , 20:42 26.02.2018 , output - 1000 , archac3@gmail.com
+       /* while (true) {
             in = input.readLine().trim();
             commandPart = in.split(",");
             try {
@@ -77,7 +80,9 @@ public class InterAction {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
-        }
+        }*/
+
+
     }
 
 }

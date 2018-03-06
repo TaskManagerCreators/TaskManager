@@ -28,8 +28,8 @@ public interface JournalRepository extends MongoRepository<Task, UUID> {
 
     void deleteByTargetTimeBetween(Date from , Date to);
 
-    Page findByTargetTimeBetween(Pageable pageable , Date from, Date to);
+    List<Task> findByTargetTimeBetween(Pageable pageable , Date from, Date to);
 
-    Page findByNameStartingWith(Pageable pageable , String part);
+    List<Task> findByNameStartingWith(Pageable pageable , String part);
 
 }
