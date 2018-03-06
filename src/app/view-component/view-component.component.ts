@@ -59,7 +59,7 @@ export class ViewComponentComponent implements OnInit {
   data: Object;
   from: Object;
   to: Object;
-  displayedColumns = ['name', 'describe', 'targetTime', 'reaction', 'contacts', 'status', 'delete'];
+  displayedColumns = ['name', 'describe', 'targetTime', 'reaction', 'contacts', 'status', 'user' , 'delete'];
   dataSource = new MatTableDataSource<Element>(this.ELEMENT_DATA);
   minDate = new Date();
   startDate = new FormControl(new Date());
@@ -81,7 +81,7 @@ export class ViewComponentComponent implements OnInit {
     this.from = from;
     this.to = to;
     this.ELEMENT_DATA = [];
-    this.http.get('http://localhost:8080/tasks?from=' + from + '&to=' + to + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
+    this.http.get('http://localhost:44444/tasks?from=' + from + '&to=' + to + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
       var dataset = Object.values(data);
       if (Object.values(dataset[1]).length == 0) {
         this.dataSource.data = [];
@@ -104,14 +104,14 @@ export class ViewComponentComponent implements OnInit {
       this.dialogComponent = dialogRef.componentInstance;
       this.name = this.dialogComponent.name;
       if (this.name != "") {
-        this.http.get('http://localhost:8080/tasks?name=' + this.name + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
+        this.http.get('http://localhost:44444/tasks?name=' + this.name + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
           this.parse(data);
           this.lastRequest = this.dialogComponent.lastRequest;
           console.log('The dialog was closed');
         });
       }
       else {
-        this.http.get('http://localhost:8080/tasks?page=' + this.page + '&size=' + this.size).subscribe(data => {
+        this.http.get('http://localhost:44444/tasks?page=' + this.page + '&size=' + this.size).subscribe(data => {
           this.parse(data);
           this.lastRequest = this.dialogComponent.lastRequest;
           console.log('The dialog was closed');
@@ -123,7 +123,7 @@ export class ViewComponentComponent implements OnInit {
   onPaginatorChange(): void {
     if (this.lastRequest == 'Time') {
       this.ELEMENT_DATA = [];
-      this.http.get('http://localhost:8080/tasks?from=' + this.from + '&to=' + this.to + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
+      this.http.get('http://localhost:44444/tasks?from=' + this.from + '&to=' + this.to + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
         this.parse(data);
         this.lastRequest = 'Time';
       });
@@ -131,7 +131,7 @@ export class ViewComponentComponent implements OnInit {
     }
     else if (this.lastRequest == 'All') {
       this.ELEMENT_DATA = [];
-      this.http.get('http://localhost:8080/tasks?page=' + this.page + '&size=' + this.size).subscribe(data => {
+      this.http.get('http://localhost:44444/tasks?page=' + this.page + '&size=' + this.size).subscribe(data => {
         this.parse(data);
         this.lastRequest = 'All';
       });
@@ -140,7 +140,7 @@ export class ViewComponentComponent implements OnInit {
     else if (this.lastRequest == 'Name') {
       alert('Name')
       this.ELEMENT_DATA = [];
-      this.http.get('http://localhost:8080/tasks?name=' + this.name + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
+      this.http.get('http://localhost:44444/tasks?name=' + this.name + '&page=' + this.page + '&size=' + this.size).subscribe(data => {
         this.parse(data);
         this.lastRequest = 'Name';
       });
@@ -159,6 +159,8 @@ export class ViewComponentComponent implements OnInit {
         id: item.id,
         name: item.name,
         describe: item.describe,
+        email : item.email,
+        notificationInterval: item.notificationInterval,
         targetTime: moment(item.targetTime).format('hh:mm DD.MM.YYYY'),
         reaction: JSON.parse(JSON.stringify(item.reaction)).type,
         contacts: item.contacts,
@@ -179,7 +181,7 @@ export class ViewComponentComponent implements OnInit {
     var index = this.dataSource.data.indexOf(row);
     this.dataSource.data.splice(index, 1);
     this.dataSource._updateChangeSubscription();
-    this.http.delete('http://localhost:8080/tasks/' + row.id).subscribe(data => {
+    this.http.delete('http://localhost:44444/tasks/' + row.id).subscribe(data => {
 
     });
     this.openSnackBar('Id of deleted task : ' + row.id, 'OK');
@@ -188,7 +190,7 @@ export class ViewComponentComponent implements OnInit {
   deleteAll() {
     this.dataSource.data = [];
     this.dataSource._updateChangeSubscription();
-    this.http.get('http://localhost:8080/tasks/*').subscribe(data => {
+    this.http.get('http://localhost:44444/tasks/*').subscribe(data => {
 
     });
     this.openSnackBar('All tasks deleted.', 'OK');
@@ -222,10 +224,13 @@ export interface Element {
   id: UUID;
   name: string;
   describe: string;
+  email : string;
+  notificationInterval : number;
   targetTime: Date;
   contacts: string;
   reaction: Reaction;
   status: string;
+
 }
 
 export interface Reaction {
@@ -253,18 +258,26 @@ export class DialogOverviewExampleDialog {
   ];
 
 
+  users;
+    ngOnInit(){
+      this.http.get('http://localhost:55555/users').subscribe(data => {
+        this.users = data;
+      });
+    }
   constructor(private http: HttpClient,
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
-  postData(name: string, describe: string, date: string, time: string, type: string, value: string, contacts: string) {
+  postData(name: string, describe: string, date: string, time: string, type: string, value: string, contacts: string , notificationInterval : string , user:string) {
     let uuid = UUID.UUID();
     return this.http.post(
-      'http://localhost:8080/tasks',
+      'http://localhost:44444/tasks',
       JSON.stringify({
         id: uuid,
         name: name,
         describe: describe,
+        email: user.email,
+        notificationInterval: notificationInterval,
         targetTime: +new Date(date + ' ' + time),
         reaction: {
           type: type,

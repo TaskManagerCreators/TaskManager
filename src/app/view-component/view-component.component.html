@@ -49,6 +49,11 @@
         <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="user">
+       <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+       <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+     </ng-container>
+
       <ng-container matColumnDef="delete">
       <mat-header-cell *matHeaderCellDef>
         <button mat-icon-button color="warn" (click) = "deleteAll()">

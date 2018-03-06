@@ -25,9 +25,6 @@ export class PaginatorComponent implements OnInit {
   resize() {
     this.view.size = this.size;
     this.view.onPaginatorChange();
-    while(this.view.page != 1){
-      this.back();
-    }
   }
 
   next() {
