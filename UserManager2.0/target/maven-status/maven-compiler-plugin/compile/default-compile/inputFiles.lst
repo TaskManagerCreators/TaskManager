@@ -1,0 +1,15 @@
+C:\project\UserManager\src\main\java\com\config\CorsSettingsFilter.java
+C:\project\UserManager\src\main\java\com\config\OAuth2Configuration.java
+C:\project\UserManager\src\main\java\com\model\User.java
+C:\project\UserManager\src\main\java\com\repositories\UserRepository.java
+C:\project\UserManager\src\main\java\com\controllers\UserController.java
+C:\project\UserManager\src\main\java\com\secutiry\services\UserService.java
+C:\project\UserManager\src\main\java\com\secutiry\Role.java
+C:\project\UserManager\src\main\java\com\secutiry\services\TokenAuthService.java
+C:\project\UserManager\src\main\java\com\controllers\web\UserAuthentication.java
+C:\project\UserManager\src\main\java\com\secutiry\services\TokenHandler.java
+C:\project\UserManager\src\main\java\com\InterAction.java
+C:\project\UserManager\src\main\java\com\controllers\MainController.java
+C:\project\UserManager\src\main\java\com\controllers\UserRestController.java
+C:\project\UserManager\src\main\java\com\config\SecurityConfiguration.java
+C:\project\UserManager\src\main\java\com\config\DataBaseConfiguration.java
