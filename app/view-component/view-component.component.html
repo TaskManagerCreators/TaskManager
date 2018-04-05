@@ -1,0 +1,74 @@
+<mat-toolbar color="warn">
+  <mat-toolbar-row>
+    <span>TaskManager</span>
+    <button  mat-icon-button (click)="openDialog()">
+       <mat-icon class="example-icon">add</mat-icon>
+    </button>
+    <button mat-icon-button (click) = "startSearch()">
+      <mat-icon class="example-icon">search</mat-icon>
+    </button>
+      <mat-form-field class="picker">
+        <input matInput [min]="minDate" [matDatepicker]="picker" [value]="startDate.value" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-card>
+  <div class="example-container mat-elevation-z8">
+
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="describe">
+        <mat-header-cell *matHeaderCellDef> Describe </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.describe}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="targetTime">
+        <mat-header-cell *matHeaderCellDef> Target time </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.targetTime}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="reaction">
+        <mat-header-cell *matHeaderCellDef> Reaction Type</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.reaction}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="contacts">
+        <mat-header-cell *matHeaderCellDef> Contacts </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.contacts}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="user">
+        <mat-header-cell *matHeaderCellDef> User </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="warn" (click) = "deleteAll()">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn" (click) = "deleteRow(row)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+  <app-paginator [page] = "page" [pages] = "pages"></app-paginator>
+  </div>
+</mat-card>
